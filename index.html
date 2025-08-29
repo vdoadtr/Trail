@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ফর্ম সেভার</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase-এর গ্লোবাল ভেরিয়েবল ব্যবহার করে কনফিগারেশন
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let userId = null;
+        const formEntries = document.getElementById('form-entries');
+        const loadingIndicator = document.getElementById('loading');
+        const saveButton = document.getElementById('save-button');
+        const printButton = document.getElementById('print-button');
+        const messageBox = document.getElementById('message-box');
+        const nameInput = document.getElementById('name');
+        const addressInput = document.getElementById('address');
+        const phoneInput = document.getElementById('phone');
+        const emailInput = document.getElementById('email');
+        const extraInfoInput = document.getElementById('extra-info');
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                userId = user.uid;
+                initApp();
+            } else {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined') {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (error) {
+                    console.error("Firebase Auth Error:", error);
+                    showMessage('Firebase Auth Error: ' + error.message, 'bg-red-500');
+                }
+            }
+        });
+
+        function showMessage(message, colorClass = 'bg-green-500') {
+            messageBox.textContent = message;
+            messageBox.className = `p-4 text-center text-white rounded-xl mb-4 ${colorClass}`;
+            messageBox.classList.remove('hidden');
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        function initApp() {
+            loadingIndicator.classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+
+            const formsCollection = collection(db, `artifacts/${appId}/users/${userId}/forms`);
+            
+            // নতুন এন্ট্রি যুক্ত হলে রিয়েল-টাইমে আপডেট করা
+            onSnapshot(formsCollection, (snapshot) => {
+                formEntries.innerHTML = '';
+                const forms = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // ডেটাগুলো নতুন থেকে পুরাতন ক্রম অনুসারে সাজানো
+                forms.sort((a, b) => b.timestamp - a.timestamp);
+
+                if (forms.length === 0) {
+                    formEntries.innerHTML = '<p class="text-center text-gray-500">এখনও কোনো ডেটা সেভ করা হয়নি।</p>';
+                } else {
+                    forms.forEach(form => {
+                        const entryElement = document.createElement('div');
+                        entryElement.className = 'bg-gray-50 p-6 rounded-xl border border-gray-200 shadow-sm transition duration-300 hover:shadow-md relative';
+                        entryElement.innerHTML = `
+                            <button onclick="deleteEntry('${form.id}')" class="absolute top-3 right-3 text-red-500 hover:text-red-700 transition duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v2M6 7h12" />
+                                </svg>
+                            </button>
+                            <h3 class="text-lg font-bold text-gray-800 mb-2">নাম: ${form.name || '-'}</h3>
+                            <p class="text-sm text-gray-600"><strong>ঠিকানা:</strong> ${form.address || '-'}</p>
+                            <p class="text-sm text-gray-600"><strong>ফোন:</strong> ${form.phone || '-'}</p>
+                            <p class="text-sm text-gray-600"><strong>ইমেল:</strong> ${form.email || '-'}</p>
+                            <p class="text-sm text-gray-600 mt-2"><strong>অতিরিক্ত তথ্য:</strong> ${form.extraInfo || '-'}</p>
+                            <p class="text-xs text-gray-400 mt-2">সেভ করা হয়েছে: ${new Date(form.timestamp.toDate()).toLocaleString('bn-BD')}</p>
+                        `;
+                        formEntries.appendChild(entryElement);
+                    });
+                }
+            });
+        }
+        
+        // সেভ ডেটা ফাংশন
+        window.saveData = async function() {
+            if (!userId) {
+                showMessage('লগইন করুন অথবা কিছুক্ষণ অপেক্ষা করুন।', 'bg-red-500');
+                return;
+            }
+            
+            saveButton.disabled = true;
+            saveButton.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>সেভ করা হচ্ছে...`;
+
+            try {
+                const formsCollection = collection(db, `artifacts/${appId}/users/${userId}/forms`);
+                await addDoc(formsCollection, {
+                    name: nameInput.value,
+                    address: addressInput.value,
+                    phone: phoneInput.value,
+                    email: emailInput.value,
+                    extraInfo: extraInfoInput.value,
+                    timestamp: serverTimestamp()
+                });
+                showMessage('ডেটা সফলভাবে সেভ করা হয়েছে!');
+                // ফর্ম রিসেট করা
+                nameInput.value = '';
+                addressInput.value = '';
+                phoneInput.value = '';
+                emailInput.value = '';
+                extraInfoInput.value = '';
+            } catch (e) {
+                console.error("ডেটা সেভ করতে ব্যর্থ: ", e);
+                showMessage('ডেটা সেভ করতে ব্যর্থ! আবার চেষ্টা করুন।', 'bg-red-500');
+            } finally {
+                saveButton.disabled = false;
+                saveButton.innerHTML = `<svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>সেভ করুন`;
+            }
+        }
+
+        window.deleteEntry = async function(docId) {
+            if (confirm("আপনি কি নিশ্চিত এই এন্ট্রিটি ডিলিট করতে চান?")) {
+                try {
+                    await deleteDoc(doc(db, `artifacts/${appId}/users/${userId}/forms`, docId));
+                    showMessage('এন্ট্রি সফলভাবে ডিলিট করা হয়েছে!');
+                } catch (e) {
+                    console.error("ডেটা ডিলিট করতে ব্যর্থ: ", e);
+                    showMessage('ডেটা ডিলিট করতে ব্যর্থ! আবার চেষ্টা করুন।', 'bg-red-500');
+                }
+            }
+        }
+        
+        window.printForm = function() {
+            // প্রিন্ট করার জন্য একটি নতুন উইন্ডো বা ট্যাব খোলা
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>ফর্ম</title>');
+            printWindow.document.write('<style>body{font-family: Arial, sans-serif; padding: 20px;} .form-data-box {border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 8px;} h1{text-align: center;}</style>');
+            printWindow.document.write('</head><body>');
+            
+            // প্রিন্ট করার জন্য ডেটা তৈরি করা
+            const name = nameInput.value;
+            const address = addressInput.value;
+            const phone = phoneInput.value;
+            const email = emailInput.value;
+            const extraInfo = extraInfoInput.value;
+
+            const content = `
+                <div class="form-data-box">
+                    <strong>নাম:</strong> ${name || '-'}<br>
+                    <strong>ঠিকানা:</strong> ${address || '-'}<br>
+                    <strong>ফোন নম্বর:</strong> ${phone || '-'}<br>
+                    <strong>ইমেল:</strong> ${email || '-'}<br>
+                </div>
+                <div class="form-data-box">
+                    <strong>অতিরিক্ত তথ্য:</strong><br>${extraInfo || '-'}
+                </div>
+            `;
+            
+            printWindow.document.write(content);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            
+            // প্রিন্ট ডায়ালগ খোলা
+            printWindow.print();
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        @media print {
+            body { background-color: white; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <div id="loading" class="flex flex-col items-center justify-center min-h-screen text-gray-600">
+        <svg class="animate-spin h-10 w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+        <p class="mt-4 text-lg">লোড হচ্ছে...</p>
+    </div>
+
+    <div id="main-content" class="p-6 lg:p-10 flex-grow container mx-auto hidden">
+        <div id="message-box" class="hidden"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- ফর্ম ইনপুট প্যানেল -->
+            <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-200 no-print">
+                <h2 class="text-2xl lg:text-3xl font-bold mb-6 text-gray-800">ফর্ম ইনপুট</h2>
+                <div class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">নাম</label>
+                        <input type="text" id="name" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-700 mb-2">ঠিকানা</label>
+                        <textarea id="address" rows="3" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300"></textarea>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">ফোন নম্বর</label>
+                        <input type="tel" id="phone" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">ইমেল</label>
+                        <input type="email" id="email" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300">
+                    </div>
+                    <div>
+                        <label for="extra-info" class="block text-sm font-medium text-gray-700 mb-2">অতিরিক্ত তথ্য</label>
+                        <textarea id="extra-info" rows="5" class="mt-1 block w-full px-4 py-3 border border-gray-300 rounded-xl shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-300"></textarea>
+                    </div>
+                </div>
+
+                <!-- বাটন -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <button id="save-button" onclick="saveData()" class="w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 shadow-md">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>
+                        সেভ করুন
+                    </button>
+                    <button id="print-button" onclick="printForm()" class="w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-blue-600 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300 shadow-md">
+                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M19 8h-1V3H6v5H5c-1.1 0-2 .9-2 2v6h4v4h10v-4h4v-6c0-1.1-.9-2-2-2zM8 5h8v3H8V5zm8 14H8v-4h8v4zm2-5c.55 0 1-.45 1-1s-.45-1-1-1-1 .45-1 1 .45 1 1 1zm-4-10H8V3h8v1zm-2 15h-4v-4h4v4z"/></svg>
+                        প্রিন্ট করুন
+                    </button>
+                </div>
+            </div>
+            
+            <!-- সেভ করা ডেটা দেখানোর প্যানেল -->
+            <div class="bg-white p-6 rounded-3xl shadow-lg border border-gray-200">
+                <h2 class="text-2xl lg:text-3xl font-bold mb-6 text-gray-800">সেভ করা তথ্য</h2>
+                <div id="form-entries" class="space-y-6">
+                    <!-- ডেটা এখানে লোড হবে -->
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
