@@ -1,328 +1,300 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic meta tags for responsiveness and character encoding -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Website title for the browser tab -->
-    <title>VDOADTR PORTFOLIO</title>
-    <!-- Favicon link for the browser tab icon -->
-    <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczMv8Hnwo1ts7rX-F7rigOfB8bu7Editogg_pTbm8nsdfBpZxwrKiP-TFH6Z_Ki0xTeUIHmT8ZtL3rysCtXlL7bxUkBt-z_zm2Ol4MphnUBs1NDa_iDvXKrv7_f_cpsY6EBW6a3SxNte1HXXFroNOorr=w945-h945-s-no-gm?authuser=0" type="image/x-icon">
-    <!-- Styling using Tailwind CSS -->
+    <!-- Website title visible in the browser tab -->
+    <!-- The user requested "VDOADTR CV" as the title -->
+    <title>VDOADTR CV</title>
+    <!-- Favicon as requested by the user -->
+    <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczPX0sCcMMwD8I5-REdo-keNM5TZU_HBKxEyV0chdP7f9xPpS_JDxkBEmoYxk7H42DF7Vcdl7oOnSjjiDg1K0W7DrORhQtFWWnQQDKdY3vn9wUncS9UG1zTFarY7M3HQDfuMeTJt22qoIEOrImTck23L=w945-h945-s-no-gm?authuser=0" type="image/x-icon">
+    <!-- Google Fonts for a modern, clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN for easy styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Icons from Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom styles to set the font family and some basic overrides -->
     <style>
-        /* Inter font is used */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            color: #333;
+        }
+        /* Custom CSS for the glowing effect on the button */
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6;
+            }
+            50% {
+                box-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
+            }
+            100% {
+                box-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6;
+            }
+        }
+        .glow-button {
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        /* Custom CSS for the text gradient effect as requested by the user */
+        .vdo-gradient {
+            background: linear-gradient(to bottom, #1d4ed8, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Drop shadow for button text */
-        .text-shadow-custom {
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        /*
+         * Print-specific styles for A4 page.
+         * This media query applies only when the user is trying to print the page.
+         */
+        @media print {
+            body {
+                background-color: #fff; /* White background for printing */
+                font-size: 11pt; /* Smaller font for better fit on A4 */
+            }
+
+            /* Hide elements that are not necessary for a printed CV */
+            .no-print {
+                display: none !important;
+            }
+
+            /* Adjust margins and padding for a clean A4 layout */
+            .print-container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            /* Remove backgrounds and shadows to save ink */
+            section, header, .job-card, .skill-card {
+                background-color: #fff !important;
+                box-shadow: none !important;
+            }
+
+            /* Ensure all content flows in a single column for printing */
+            .grid-cols-1, .md\:grid-cols-2 {
+                display: block;
+                gap: 0;
+            }
+
+            /* Add page breaks to avoid splitting sections awkwardly */
+            section {
+                page-break-inside: avoid;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
         }
     </style>
 </head>
-<body class="bg-white">
+<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-4 sm:p-8">
 
-    <!-- The navigation bar will now be on top of all pages and change its style -->
-    <nav id="main-nav" class="p-2 flex items-center justify-between z-10 transition-colors duration-300">
-        <!-- 'Home' button (Left side) -->
-        <div class="flex-shrink-0">
-            <a href="#" class="nav-btn px-2 py-1 text-xs sm:px-4 sm:py-2 sm:text-base rounded-full transition-colors duration-200 shadow-md hover:shadow-lg hover:bg-[#0046FF]" onclick="showPage('home')">Home</a>
-        </div>
-        <!-- Right-side buttons -->
-        <div class="flex space-x-2 sm:space-x-4">
-            <a href="#" class="nav-btn px-2 py-1 text-xs sm:px-4 sm:py-2 sm:text-base rounded-full transition-colors duration-200 shadow-md hover:shadow-lg hover:bg-[#0046FF]" onclick="showPage('work')">My work</a>
-            <a href="#" class="nav-btn px-2 py-1 text-xs sm:px-4 sm:py-2 sm:text-base rounded-full transition-colors duration-200 shadow-md hover:shadow-lg hover:bg-[#0046FF]" onclick="showPage('about')">About me</a>
-            <a href="#" class="nav-btn px-2 py-1 text-xs sm:px-4 sm:py-2 sm:text-base rounded-full transition-colors duration-200 shadow-md hover:shadow-lg hover:bg-[#0046FF]" onclick="showPage('contact')">Contact</a>
-        </div>
-    </nav>
-
-    <!-- Main page container for all content sections -->
-    <div id="website-container" class="relative">
-
-        <!-- This is the home page section -->
-        <div id="home-page" class="block">
-            <!-- Container for the top image, spanning full width. -->
-            <div class="w-full">
-                <!-- New top banner image URL is added here. -->
+    <!-- Main container for the website content -->
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full p-6 sm:p-10 print-container">
+        
+        <!-- Header Section with a dark background to make the white text pop -->
+        <!-- User requested a lighter dark background and a drop shadow on the text -->
+        <header class="text-center mb-10 bg-gray-800 p-8 rounded-2xl shadow-xl">
+            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center overflow-hidden">
+                <!-- Profile picture based on your uploaded CV -->
                 <img 
-                    src="https://lh3.googleusercontent.com/pw/AP1GczMAr87A_QPq882EJlRZlBL8N30FYkk8KGVQG2P1BOKAbfEd0RONTsQGDy1l2mZDckDH-YHjDyhQKb7UHvo6vavmmj_ksieX0mbFVF7RcAnr9DemlzvO06b5FrOqqAx-EWvBwMocxqMrEdMXz7SRvxnQ=w1920-h759-s-no-gm?authuser=0" 
-                    alt="Website Main Banner" 
-                    class="w-full h-auto"
-                >
+                    src="https://lh3.googleusercontent.com/pw/AP1GczOUscoOaUbAVoXOOxCZM6-6DSRh1FY4XRGesTlu8gULQUkamUpdRRpruZej4Sj0eMOwXU6qvm43evX_U9BXkSYnwe0g-NI4eOfr7798h-z8aAXqRaBHfWSKIPl3TvGoMTFQivclxX8_bcEMz1MlQYT0=w1280-h720-s-no-gm?authuser=0"
+                    alt="Rakibul Malithya's profile picture"
+                    class="w-full h-full object-cover"
+                    onerror="this.src='https://placehold.co/192x192/4B5563/FFFFFF?text=R'"
+                />
             </div>
+            <!-- Heading with custom gradient, text colors, and a new drop shadow -->
+            <h1 class="text-2xl sm:text-5xl font-extrabold mb-2 drop-shadow-lg">
+                <span class="vdo-gradient">VDO</span>
+                <span class="text-white">ADTR</span>
+            </h1>
+            <h2 class="text-xl sm:text-4xl font-extrabold text-white mb-2">Rakibul Malithya</h2>
+            <p class="text-lg sm:text-xl font-medium text-gray-400">Video Editor and Creative Professional</p>
+        </header>
 
-            <!-- Profile picture and text section is placed below the banner. Increased top margin (mt-6) for better spacing on mobile and desktop. -->
-            <div class="flex flex-col items-center justify-center -mt-12 sm:-mt-24 md:-mt-32 z-20">
-                <!-- 
-                    This is the profile picture. The placeholder image has been replaced. 
-                    You must replace this URL with your own public profile picture URL. 
-                -->
-                <img
-                    src="https://lh3.googleusercontent.com/pw/AP1GczMhK-lIdyRe230IpTmRw3PVykXUZRKg0IthnFIK4pqhsPBeFrPQLlpcx07Ew42NhQnTHB6E2yVx-XVpJ0-CxL877V7Fy9SCZlB3TQkIKmepCfzMZHoUoLiyV9jxuqZuPFbVHXsZTQH7EH9b76h4yBlv=w1280-h720-s-no-gm?authuser=0"
-                    alt="Profile Picture"
-                    class="w-32 h-32 sm:w-40 sm:h-40 md:w-60 md:h-60 object-cover rounded-full shadow-lg border-4 border-white transform translate-y-8 sm:translate-y-0"
-                >
-                <div class="text-center mt-6">
-                    <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mt-2">Rakibul Malithya</h2>
-                    <p class="text-sm sm:text-md md:text-lg text-gray-600">Video Editor and Creative</p>
-                </div>
-            </div>
-
-            <!-- The 'Showreel' section -->
-            <section class="container mx-auto px-4 py-8 text-center">
-                <h3 class="text-xl sm:text-2xl font-bold text-gray-800 mb-6">My Showreel</h3>
-                <div class="relative w-full overflow-hidden rounded-lg shadow-md" style="padding-top: 56.25%;">
-                    <!-- 
-                        This is an embedded YouTube video. 
-                        The video URL has been updated with the new link provided by the user.
-                        The 'padding-top: 56.25%;' makes the iframe responsive, maintaining a 16:9 aspect ratio.
-                    -->
-                    <iframe 
-                        class="absolute inset-0 w-full h-full rounded-lg"
-                        src="https://www.youtube.com/embed/JH2Td9pxSMI" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                    ></iframe>
-                </div>
-
-                <!-- This is the new button added below the showreel video -->
-                <a href="#" class="inline-block mt-8 py-3 px-6 text-white font-bold rounded-full bg-blue-500 hover:bg-blue-700 transition-colors duration-300 shadow-lg" onclick="showPage('work')">
-                    Let's see my work
-                </a>
+        <!-- Main Content Section -->
+        <main class="space-y-8">
+            <!-- About Me Section -->
+            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">About Me</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    I am a highly skilled video editor with a passion for storytelling and visual creativity. My expertise spans various areas including crafting compelling short films, creating dynamic motion graphics, and mastering sound design and color grading to bring projects to life. I also possess a deep understanding of camera fundamentals such as exposure, shutter speed, ISO, focal length, and various shot angles, allowing me to approach every project with a comprehensive creative vision.
+                </p>
             </section>
-        </div>
 
-        <!-- This is the 'My work' page section. It is hidden by default. -->
-        <div id="work-page" class="hidden container mx-auto px-4 py-8">
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">My Work</h3>
-                <p class="text-sm sm:text-lg text-gray-600 text-center leading-relaxed mb-8">
-                    Here you can explore a diverse range of my creative works — from video editing and motion graphics to sound design and color grading. Each project reflects my dedication to visual storytelling and technical precision. Feel free to browse through and get a glimpse of my style, skill, and passion for post-production.
-                </p>
-                <!-- This section can be customized later with your projects -->
+            <!-- Experience Section based on CV with logos placed before company names -->
+            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Work Experience</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-100 p-6 rounded-lg shadow-inner">
-                        <h4 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Project 1 Title</h4>
-                        <p class="text-sm sm:text-base text-gray-600">Short description of the project and what you did. Add a thumbnail or a link to the video.</p>
-                    </div>
-                    <div class="bg-gray-100 p-6 rounded-lg shadow-inner">
-                        <h4 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Project 2 Title</h4>
-                        <p class="text-sm sm:text-base text-gray-600">Short description of the project and what you did. Add a thumbnail or a link to the video.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- This is the 'About Me' page section. It is hidden by default. -->
-        <div id="about-page" class="hidden container mx-auto px-4 py-8">
-            <div class="bg-white p-8 rounded-lg shadow-md">
-                <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">About Me</h3>
-                <p class="text-sm sm:text-lg text-gray-600 text-center leading-relaxed mb-8">
-                    I am a passionate and skilled video editor with a strong eye for detail and a knack for creative storytelling. My experience in various projects has honed my abilities to deliver high-quality visual content that captivates audiences. I'm always eager to take on new challenges and bring innovative ideas to life.
-                </p>
-
-                <!-- Education Section -->
-                <div class="mb-8">
-                    <h4 class="text-lg sm:text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">Education</h4>
-                    <!-- New Education Entry -->
-                    <div class="flex items-start mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.05v-9.05z" />
-                            <path d="M12 14L5.84 10.578a12.083 12.083 0 01-.665-6.479A11.952 11.952 0 0012 20.05v-9.05z" />
-                        </svg>
-                        <p class="text-sm sm:text-base text-gray-600">
-                            M.A. in Journalism & Mass Communication
-                            <br>
-                            Harichand Guruchand University (Admitted August 29, 2025)
-                            <br>
-                            I am pursuing a master's degree in Journalism & Mass Communication to deepen my understanding of media theory, digital storytelling, and media production, building on my undergraduate foundation to advance my career.
-                        </p>
-                    </div>
-                    <!-- Existing Education Entry -->
-                    <div class="flex items-start mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-                            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.05v-9.05z" />
-                            <path d="M12 14L5.84 10.578a12.083 12.083 0 01-.665-6.479A11.952 11.952 0 0012 20.05v-9.05z" />
-                        </svg>
-                        <p class="text-sm sm:text-base text-gray-600">
-                            B.Voc in Broadcast Journalism
-                            <br>
-                            I completed my graduation with a focus on Broadcast Journalism, achieving an impressive 88% marks in my final semester.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Work Experience Section -->
-                <div class="mb-8">
-                    <h4 class="text-lg sm:text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">Work Experience</h4>
                     <!-- Job 1 -->
-                    <div class="flex items-start mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-1.208-8.495-3.473l-.403-.403l.403-.403C5.78 9.208 8.817 8 12 8s6.22 1.208 8.495 3.473l.403.403l-.403.403z" />
-                        </svg>
-                        <p class="text-sm sm:text-base text-gray-600">
-                            Video Editor, Our Voice (Starting May 1, 2025)
-                            <br>
-                            Received an offer to join Our Voice as a Video Editor, where my prior experience and skills are highly valued.
-                        </p>
-                    </div>
-                    <!-- New Job Entry -->
-                    <div class="flex items-start mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-1.208-8.495-3.473l-.403-.403l.403-.403C5.78 9.208 8.817 8 12 8s6.22 1.208 8.495 3.473l.403.403l-.403.403z" />
-                        </svg>
-                        <p class="text-sm sm:text-base text-gray-600">
-                            Computer Teacher, Itahar Al-amin Mission (March 2025 - May 2025)
-                        </p>
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <div class="flex items-center mb-1">
+                             <!-- Our Voice Logo -->
+                             <img src="https://yt3.googleusercontent.com/1RgXGPe4yokATS-mD0nvWCyPCo3gsRrhBem_K6TE1_B72_J6j3WEe_LLyP10UZkoYxlhy33hGs=s160-c-k-c0x00ffffff-no-rj" alt="Our Voice Logo" class="w-8 h-8 rounded-full mr-3">
+                             <!-- Make company name clickable -->
+                             <a href="https://www.youtube.com/@OurVoice24" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">Our Voice</a>
+                        </div>
+                        <p class="text-gray-600">Video Editor</p>
+                        <p class="text-sm text-gray-500 mt-1">April 2025 - Present</p>
                     </div>
                     <!-- Job 2 -->
-                    <div class="flex items-start mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-1.208-8.495-3.473l-.403-.403l.403-.403C5.78 9.208 8.817 8 12 8s6.22 1.208 8.495 3.473l.403.403l-.403.403z" />
-                        </svg>
-                        <p class="text-sm sm:text-base text-gray-600">
-                            Video Editor, Tara TV (June 2024 - November 2024)
-                        </p>
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <div class="flex items-center mb-1">
+                             <!-- Itahar Al-Amin Mission Logo -->
+                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/242684800_1513395515684258_6706339316110454082_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9GlRGyBQc_sQ7kNvwG-d_kQ&_nc_oc=AdkBYQuErpYMMXb12n7b9kQ6RHFqLcNaG73o3MN9DSILD9980x-r6y_vxv6fieLjAok&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=KXrw32a1X8zWH8MK9xPodw&oh=00_AfV4UyFyDRYwhFYSbCXF8dO0YmKISdfYnQ8piV_V3epHlA&oe=68BC7699" alt="Itahar Al-Amin Mission Logo" class="w-8 h-8 rounded-full mr-3">
+                             <!-- Make company name clickable -->
+                             <a href="https://www.facebook.com/profile.php?id=100010414724272" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">Itahar Al-amin Mission</a>
+                        </div>
+                        <p class="text-gray-600">Computer Teacher</p>
+                        <p class="text-sm text-gray-500 mt-1">March 2025 - May 2025 (3 Months)</p>
                     </div>
                     <!-- Job 3 -->
-                    <div class="flex items-start mb-4">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 sm:h-6 sm:w-6 text-blue-500 flex-shrink-0 mr-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-1.208-8.495-3.473l-.403-.403l.403-.403C5.78 9.208 8.817 8 12 8s6.22 1.208 8.495 3.473l.403.403l-.403.403z" />
-                        </svg>
-                        <p class="text-sm sm:text-base text-gray-600">
-                            Video Editor, TDN Bangla (November 2022 - April 2024)
-                        </p>
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <div class="flex items-center mb-1">
+                             <!-- Tara TV Logo -->
+                             <img src="https://yt3.googleusercontent.com/fkbr5YfbVwEI4x3Oq3U9w2xbOahbkMJMpfhwx0TPfEqQtRwsq005IhJ5d3-EaX9JQ6Q-9suu=s160-c-k-c0x00ffffff-no-rj" alt="Tara TV Logo" class="w-8 h-8 rounded-full mr-3">
+                             <!-- Make company name clickable -->
+                             <a href="https://www.youtube.com/@TARANEWSOFFICIAL" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">TARA NEWS</a>
+                        </div>
+                        <p class="text-gray-600">Video Editor</p>
+                        <p class="text-sm text-gray-500 mt-1">June 2024 - November 2024 (6 Months)</p>
+                    </div>
+                    <!-- Job 4 -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <div class="flex items-center mb-1">
+                             <!-- TDN Bangla Logo -->
+                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/339994503_159413133721561_2355646534749856474_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=IahwyGtA2r4Q7kNvwFnStKY&_nc_oc=Adm3PzKFG3Ztp6GmsSqPtgJgOfNUZeM1LU5eCULVqMn0HfhTqjgLdnEi4kVJqd5zUqU&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=ToRX4uUQGeB0CK4dQ8KLHw&oh=00_AfW0146cykANdgXGfL5GtMTfTFnKPmu8ev5tC2M8ByrIxQ&oe=68BC5694" alt="TDN Bangla Logo" class="w-8 h-8 rounded-full mr-3">
+                             <!-- Make company name clickable -->
+                             <a href="https://www.facebook.com/tdnbangla" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">TDN Bangla</a>
+                        </div>
+                        <p class="text-gray-600">Video Editor</p>
+                        <p class="text-sm text-gray-500 mt-1">November 2022 - April 2024 (1.5 years)</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Skills Section -->
-                <div class="mb-8">
-                    <h4 class="text-lg sm:text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-blue-500 pb-2">Skills & Expertise</h4>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <p class="font-semibold text-gray-800 mb-2 text-base sm:text-lg">Technical Skills</p>
-                            <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm sm:text-base">
-                                <li>Video Editing: Proficient in Adobe Premiere Pro & DaVinci Resolve.</li>
-                                <li>Motion Graphics: Experienced with Adobe After Effects for dynamic animations.</li>
-                                <li>Camera Operation: Strong understanding of exposure, shutter speed, ISO, and different camera shots.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p class="font-semibold text-gray-800 mb-2 text-base sm:text-lg">Other Skills</p>
-                            <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm sm:text-base">
-                                <li>Cooking: Expert in cooking various dishes including rice, khichuri, and biryani.</li>
-                                <li>Teaching: Experienced as a computer teacher.</li>
-                                <li>Storytelling: Ability to craft compelling narratives through visual content.</li>
-                            </ul>
-                        </div>
+            <!-- Education Section based on CV -->
+            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Education</h2>
+                <!-- New entry for Master's degree -->
+                <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105 mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">M.A. in Journalism & Mass Communication</h3>
+                    <p class="text-gray-600">Harichand Guruchand University</p>
+                    <p class="text-sm text-gray-500 mt-1">Admitted August 29, 2025 - Present</p>
+                    <p class="mt-2 text-gray-700">I am pursuing a master's degree in Journalism & Mass Communication to deepen my understanding of media theory, digital storytelling, and media production, building on my undergraduate foundation to advance my career.</p>
+                </div>
+                <!-- Existing entry for Bachelor's degree -->
+                <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-lg font-semibold text-gray-900">B.Voc in Broadcast Journalism</h3>
+                    <p class="text-gray-600">Derozio Memorial College</p>
+                    <p class="text-sm text-gray-500 mt-1">2022-2025</p>
+                    <p class="mt-2 text-gray-700">I completed my graduation with a focus on Broadcast Journalism, achieving an impressive 88% marks in my final semester.</p>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Video Editing Skill Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Video Editing</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Primer Pro</li>
+                            <li>Davinci Resolve</li>
+                        </ul>
+                    </div>
+                    <!-- Motion Graphics Design Skill Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Motion Graphics Design</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>After Effects</li>
+                            <li>Photoshop</li>
+                        </ul>
+                    </div>
+                    <!-- Sound Design Skill Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Sound Design</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Primer Pro</li>
+                            <li>Adobe Audition</li>
+                        </ul>
+                    </div>
+                    <!-- Color Grading Skill Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Color Grading</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>Primer Pro</li>
+                            <li>Davinci Resolve</li>
+                        </ul>
+                    </div>
+                    <!-- AI Tools Skill Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">AI Tools</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                            <li>ChatGPT: Proficient in image generation and information retrieval.</li>
+                            <li>Gemini: Skilled in video creation, information retrieval, and basic coding.</li>
+                        </ul>
+                    </div>
+                    <!-- Camera Operation Skill Card -->
+                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Camera Operation</h3>
+                        <p class="text-sm text-gray-700 mt-1">Clear understanding of camera fundamentals like Exposure, Shutter speed, ISO, and various shot angles.</p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <!-- This is the 'Contact' page section. Now updated with the new content. -->
-        <div id="contact-page" class="hidden container mx-auto px-4 py-8">
-            <!-- Contact Card -->
-            <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg max-w-sm w-full mx-auto">
-                <h2 class="text-xl sm:text-3xl md:text-4xl font-bold text-center text-gray-800 mb-6">Contact</h2>
-
-                <!-- Email Section -->
-                <a href="mailto:vdoadtr@gmail.com" class="flex items-center space-x-4 p-4 rounded-xl bg-blue-50 hover:bg-blue-100 transition-colors duration-200 mb-4 group shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-500">
-                    <div class="flex-shrink-0 w-12 h-12 bg-blue-500 text-white flex items-center justify-center rounded-full text-2xl group-hover:bg-blue-600 transition-colors duration-200">
-                        <i class="fa-solid fa-envelope"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs sm:text-sm font-semibold text-gray-500">Email</p>
-                        <p class="text-sm sm:text-lg font-medium text-gray-800 group-hover:underline">vdoadtr@gmail.com</p>
-                    </div>
+            <!-- Portfolio Link Section - Added as requested -->
+            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm text-center no-print">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">My Work</h2>
+                <p class="text-gray-700 leading-relaxed mb-6">
+                    Interested in my creative projects? Click the button below to visit my portfolio website and see more of my work.
+                </p>
+                <a href="https://vdoadtr.github.io/Portfolio-VDOADTR/" target="_blank" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-md hover:bg-blue-700 transition-colors duration-300 glow-button">
+                    Visit Portfolio Website
                 </a>
+            </section>
 
-                <!-- Phone Call Section -->
-                <a href="tel:+919531661985" class="flex items-center space-x-4 p-4 rounded-xl bg-green-50 hover:bg-green-100 transition-colors duration-200 mb-4 group shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-500">
-                    <div class="flex-shrink-0 w-12 h-12 bg-green-500 text-white flex items-center justify-center rounded-full text-2xl group-hover:bg-green-600 transition-colors duration-200">
-                        <i class="fa-solid fa-phone"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs sm:text-sm font-semibold text-gray-500">Phone Call</p>
-                        <p class="text-sm sm:text-lg font-medium text-gray-800 group-hover:underline">+91 9531661985</p>
-                    </div>
-                </a>
-
-                <!-- WhatsApp Section -->
-                <a href="https://wa.me/919531661985" class="flex items-center space-x-4 p-4 rounded-xl bg-lime-50 hover:bg-lime-100 transition-colors duration-200 group shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-500">
-                    <div class="flex-shrink-0 w-12 h-12 bg-lime-500 text-white flex items-center justify-center rounded-full text-2xl group-hover:bg-lime-600 transition-colors duration-200">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs sm:text-sm font-semibold text-gray-500">WhatsApp</p>
-                        <p class="text-sm sm:text-lg font-medium text-gray-800 group-hover:underline">+91 9531661985</p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- JavaScript to handle page switching -->
-    <script>
-        /**
-         * Function to show and hide different sections of the website.
-         * It also dynamically changes the navigation bar's appearance.
-         * @param {string} pageId - The ID of the page to show ('home', 'about', 'work', 'contact').
-         */
-        function showPage(pageId) {
-            const pages = ['home-page', 'work-page', 'about-page', 'contact-page'];
-            const nav = document.getElementById('main-nav');
-            const navLinks = document.querySelectorAll('.nav-btn');
+            <!-- Contact Section with updated info -->
+            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Contact</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    If you are interested in working on a project or would just like to talk, please feel free to contact me.
+                </p>
+                <!-- Flexbox container to make buttons appear in a row on all screen sizes -->
+                <div class="mt-4 text-center flex justify-center items-center gap-4 no-print">
+                    <!-- Email link with correct address -->
+                    <a href="mailto:vdoadtr@gmail.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-blue-700 transition-colors duration-300">
+                        Send Email
+                    </a>
+                    <!-- Phone number with correct link -->
+                    <a href="tel:9531661985" class="inline-block bg-green-600 text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-green-700 transition-colors duration-300">
+                        Call Me
+                    </a>
+                </div>
+                <!-- Displaying the contact details directly for clarity -->
+                <div class="mt-6 text-center text-gray-600">
+                    <p class="font-medium">Email: vdoadtr@gmail.com</p>
+                    <p class="font-medium">Phone: +91 9531661985</p>
+                </div>
+            </section>
             
-            // Remove previous classes for a clean slate
-            nav.classList.remove('absolute', 'sticky', 'top-0', 'bg-white', 'shadow-md');
-            navLinks.forEach(link => {
-                link.classList.remove('text-white', 'hover:text-white', 'text-black');
-            });
+            <!-- Print Section -->
+            <section class="text-center mt-8 no-print">
+                <button onclick="window.print()" class="bg-gray-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-300">
+                    Print
+                </button>
+            </section>
 
-            // Set classes based on the pageId
-            if (pageId === 'home') {
-                // For the home page, the nav bar sits on the banner image
-                nav.classList.add('absolute', 'top-0', 'left-0', 'right-0');
-                navLinks.forEach(link => {
-                    link.classList.add('bg-[rgba(0,70,255,0.2)]', 'text-white', 'text-shadow-custom');
-                    link.classList.remove('hover:text-white'); // Remove if present from other pages
-                });
-            } else {
-                // For other pages, the nav bar is sticky and has a white background
-                nav.classList.add('sticky', 'top-0', 'bg-white', 'shadow-md');
-                navLinks.forEach(link => {
-                    link.classList.add('bg-[rgba(0,70,255,0.2)]', 'text-black');
-                    link.classList.remove('text-white', 'text-shadow-custom'); // Remove if present from home page
-                });
-            }
+        </main>
 
-            // Hide all pages and then show the selected one
-            pages.forEach(page => {
-                const element = document.getElementById(page);
-                if (element) {
-                    if (page === `${pageId}-page`) {
-                        element.style.display = 'block';
-                    } else {
-                        element.style.display = 'none';
-                    }
-                }
-            });
-        }
-        
-        // Initially show the home page.
-        document.addEventListener('DOMContentLoaded', () => {
-            showPage('home');
-        });
-    </script>
+        <!-- Footer Section -->
+        <footer class="mt-10 text-center text-gray-500 text-sm">
+            <p>&copy; 2025 Rakibul Malithya | All rights reserved.</p>
+        </footer>
+
+    </div>
+
 </body>
 </html>
