@@ -50,7 +50,9 @@
         @media print {
             body {
                 background-color: #fff; /* White background for printing */
-                font-size: 11pt; /* Smaller font for better fit on A4 */
+                font-size: 10pt; /* Smaller font for better fit on A4 */
+                margin: 0;
+                padding: 0;
             }
 
             /* Hide elements that are not necessary for a printed CV */
@@ -62,7 +64,7 @@
             .print-container {
                 box-shadow: none;
                 border: none;
-                padding: 0;
+                padding: 1cm;
                 margin: 0;
             }
 
@@ -70,6 +72,7 @@
             section, header, .job-card, .skill-card {
                 background-color: #fff !important;
                 box-shadow: none !important;
+                padding: 0;
             }
 
             /* Ensure all content flows in a single column for printing */
@@ -77,12 +80,27 @@
                 display: block;
                 gap: 0;
             }
+            
+            /* Remove margins between sections to tighten the layout */
+            section {
+                margin: 0;
+                padding: 0.5rem 0;
+            }
 
             /* Add page breaks to avoid splitting sections awkwardly */
             section {
                 page-break-inside: avoid;
-                margin-top: 1rem;
-                margin-bottom: 1rem;
+            }
+            
+            /* Reduce space between list items */
+            li {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            
+            /* Reduce padding on the main container */
+            .p-6, .sm\:p-10 {
+                padding: 0;
             }
         }
     </style>
@@ -94,7 +112,7 @@
         
         <!-- Header Section with a dark background to make the white text pop -->
         <!-- User requested a lighter dark background and a drop shadow on the text -->
-        <header class="text-center mb-10 bg-gray-800 p-8 rounded-2xl shadow-xl">
+        <header class="text-center mb-6 bg-gray-800 p-6 rounded-2xl shadow-xl">
             <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center overflow-hidden">
                 <!-- Profile picture based on your uploaded CV -->
                 <img 
@@ -105,20 +123,20 @@
                 />
             </div>
             <!-- Heading with custom gradient, text colors, and a new drop shadow -->
-            <h1 class="text-2xl sm:text-5xl font-extrabold mb-2 drop-shadow-lg">
+            <h1 class="text-2xl sm:text-4xl font-extrabold mb-2 drop-shadow-lg">
                 <span class="vdo-gradient">VDO</span>
                 <span class="text-white">ADTR</span>
             </h1>
-            <h2 class="text-xl sm:text-4xl font-extrabold text-white mb-2">Rakibul Malithya</h2>
-            <p class="text-lg sm:text-xl font-medium text-gray-400">Video Editor and Creative Professional</p>
+            <h2 class="text-xl sm:text-3xl font-extrabold text-white mb-2">Rakibul Malithya</h2>
+            <p class="text-md sm:text-lg font-medium text-gray-400">Video Editor and Creative Professional</p>
         </header>
 
         <!-- Main Content Section -->
-        <main class="space-y-8">
+        <main class="space-y-6">
             <!-- About Me Section -->
             <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">About Me</h2>
-                <p class="text-gray-700 leading-relaxed">
+                <p class="text-gray-700 leading-relaxed text-sm">
                     I am a highly skilled video editor with a passion for storytelling and visual creativity. My expertise spans various areas including crafting compelling short films, creating dynamic motion graphics, and mastering sound design and color grading to bring projects to life. I also possess a deep understanding of camera fundamentals such as exposure, shutter speed, ISO, focal length, and various shot angles, allowing me to approach every project with a comprehensive creative vision.
                 </p>
             </section>
@@ -126,50 +144,50 @@
             <!-- Experience Section based on CV with logos placed before company names -->
             <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Work Experience</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Job 1 -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
                         <div class="flex items-center mb-1">
                              <!-- Our Voice Logo -->
-                             <img src="https://yt3.googleusercontent.com/1RgXGPe4yokATS-mD0nvWCyPCo3gsRrhBem_K6TE1_B72_J6j3WEe_LLyP10UZkoYxlhy33hGs=s160-c-k-c0x00ffffff-no-rj" alt="Our Voice Logo" class="w-8 h-8 rounded-full mr-3">
+                             <img src="https://yt3.googleusercontent.com/1RgXGPe4yokATS-mD0nvWCyPCo3gsRrhBem_K6TE1_B72_J6j3WEe_LLyP10UZkoYxlhy33hGs=s160-c-k-c0x00ffffff-no-rj" alt="Our Voice Logo" class="w-7 h-7 rounded-full mr-3">
                              <!-- Make company name clickable -->
-                             <a href="https://www.youtube.com/@OurVoice24" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">Our Voice</a>
+                             <a href="https://www.youtube.com/@OurVoice24" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">Our Voice</a>
                         </div>
-                        <p class="text-gray-600">Video Editor</p>
-                        <p class="text-sm text-gray-500 mt-1">April 2025 - Present</p>
+                        <p class="text-gray-600 text-sm">Video Editor</p>
+                        <p class="text-xs text-gray-500 mt-1">April 2025 - Present</p>
                     </div>
                     <!-- Job 2 -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
                         <div class="flex items-center mb-1">
                              <!-- Itahar Al-Amin Mission Logo -->
-                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/242684800_1513395515684258_6706339316110454082_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9GlRGyBQc_sQ7kNvwG-d_kQ&_nc_oc=AdkBYQuErpYMMXb12n7b9kQ6RHFqLcNaG73o3MN9DSILD9980x-r6y_vxv6fieLjAok&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=KXrw32a1X8zWH8MK9xPodw&oh=00_AfV4UyFyDRYwhFYSbCXF8dO0YmKISdfYnQ8piV_V3epHlA&oe=68BC7699" alt="Itahar Al-Amin Mission Logo" class="w-8 h-8 rounded-full mr-3">
+                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/242684800_1513395515684258_6706339316110454082_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9GlRGyBQc_sQ7kNvwG-d_kQ&_nc_oc=AdkBYQuErpYMMXb12n7b9kQ6RHFqLcNaG73o3MN9DSILD9980x-r6y_vxv6fieLjAok&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=KXrw32a1X8zWH8MK9xPodw&oh=00_AfV4UyFyDRYwhFYSbCXF8dO0YmKISdfYnQ8piV_V3epHlA&oe=68BC7699" alt="Itahar Al-Amin Mission Logo" class="w-7 h-7 rounded-full mr-3">
                              <!-- Make company name clickable -->
-                             <a href="https://www.facebook.com/profile.php?id=100010414724272" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">Itahar Al-amin Mission</a>
+                             <a href="https://www.facebook.com/profile.php?id=100010414724272" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">Itahar Al-amin Mission</a>
                         </div>
-                        <p class="text-gray-600">Computer Teacher</p>
-                        <p class="text-sm text-gray-500 mt-1">March 2025 - May 2025 (3 Months)</p>
+                        <p class="text-gray-600 text-sm">Computer Teacher</p>
+                        <p class="text-xs text-gray-500 mt-1">March 2025 - May 2025 (3 Months)</p>
                     </div>
                     <!-- Job 3 -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
                         <div class="flex items-center mb-1">
                              <!-- Tara TV Logo -->
-                             <img src="https://yt3.googleusercontent.com/fkbr5YfbVwEI4x3Oq3U9w2xbOahbkMJMpfhwx0TPfEqQtRwsq005IhJ5d3-EaX9JQ6Q-9suu=s160-c-k-c0x00ffffff-no-rj" alt="Tara TV Logo" class="w-8 h-8 rounded-full mr-3">
+                             <img src="https://yt3.googleusercontent.com/fkbr5YfbVwEI4x3Oq3U9w2xbOahbkMJMpfhwx0TPfEqQtRwsq005IhJ5d3-EaX9JQ6Q-9suu=s160-c-k-c0x00ffffff-no-rj" alt="Tara TV Logo" class="w-7 h-7 rounded-full mr-3">
                              <!-- Make company name clickable -->
-                             <a href="https://www.youtube.com/@TARANEWSOFFICIAL" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">TARA NEWS</a>
+                             <a href="https://www.youtube.com/@TARANEWSOFFICIAL" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">TARA NEWS</a>
                         </div>
-                        <p class="text-gray-600">Video Editor</p>
-                        <p class="text-sm text-gray-500 mt-1">June 2024 - November 2024 (6 Months)</p>
+                        <p class="text-gray-600 text-sm">Video Editor</p>
+                        <p class="text-xs text-gray-500 mt-1">June 2024 - November 2024 (6 Months)</p>
                     </div>
                     <!-- Job 4 -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
                         <div class="flex items-center mb-1">
                              <!-- TDN Bangla Logo -->
-                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/339994503_159413133721561_2355646534749856474_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=IahwyGtA2r4Q7kNvwFnStKY&_nc_oc=Adm3PzKFG3Ztp6GmsSqPtgJgOfNUZeM1LU5eCULVqMn0HfhTqjgLdnEi4kVJqd5zUqU&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=ToRX4uUQGeB0CK4dQ8KLHw&oh=00_AfW0146cykANdgXGfL5GtMTfTFnKPmu8ev5tC2M8ByrIxQ&oe=68BC5694" alt="TDN Bangla Logo" class="w-8 h-8 rounded-full mr-3">
+                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/339994503_159413133721561_2355646534749856474_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=IahwyGtA2r4Q7kNvwFnStKY&_nc_oc=Adm3PzKFG3Ztp6GmsSqPtgJgOfNUZeM1LU5eCULVqMn0HfhTqjgLdnEi4kVJqd5zUqU&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=ToRX4uUQGeB0CK4dQ8KLHw&oh=00_AfW0146cykANdgXGfL5GtMTfTFnKPmu8ev5tC2M8ByrIxQ&oe=68BC5694" alt="TDN Bangla Logo" class="w-7 h-7 rounded-full mr-3">
                              <!-- Make company name clickable -->
-                             <a href="https://www.facebook.com/tdnbangla" target="_blank" class="text-lg font-semibold text-gray-900 hover:text-blue-600 hover:underline">TDN Bangla</a>
+                             <a href="https://www.facebook.com/tdnbangla" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">TDN Bangla</a>
                         </div>
-                        <p class="text-gray-600">Video Editor</p>
-                        <p class="text-sm text-gray-500 mt-1">November 2022 - April 2024 (1.5 years)</p>
+                        <p class="text-gray-600 text-sm">Video Editor</p>
+                        <p class="text-xs text-gray-500 mt-1">November 2022 - April 2024 (1.5 years)</p>
                     </div>
                 </div>
             </section>
@@ -178,69 +196,69 @@
             <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Education</h2>
                 <!-- New entry for Master's degree -->
-                <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105 mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900">M.A. in Journalism & Mass Communication</h3>
-                    <p class="text-gray-600">Harichand Guruchand University</p>
-                    <p class="text-sm text-gray-500 mt-1">Admitted August 29, 2025 - Present</p>
-                    <p class="mt-2 text-gray-700">I am pursuing a master's degree in Journalism & Mass Communication to deepen my understanding of media theory, digital storytelling, and media production, building on my undergraduate foundation to advance my career.</p>
+                <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105 mb-4">
+                    <h3 class="text-md font-semibold text-gray-900">M.A. in Journalism & Mass Communication</h3>
+                    <p class="text-gray-600 text-sm">Harichand Guruchand University</p>
+                    <p class="text-xs text-gray-500 mt-1">Admitted August 29, 2025 - Present</p>
+                    <p class="mt-2 text-gray-700 text-sm">I am pursuing a master's degree in Journalism & Mass Communication to deepen my understanding of media theory, digital storytelling, and media production, building on my undergraduate foundation to advance my career.</p>
                 </div>
                 <!-- Existing entry for Bachelor's degree -->
-                <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                    <h3 class="text-lg font-semibold text-gray-900">B.Voc in Broadcast Journalism</h3>
-                    <p class="text-gray-600">Derozio Memorial College</p>
-                    <p class="text-sm text-gray-500 mt-1">2022-2025</p>
-                    <p class="mt-2 text-gray-700">I completed my graduation with a focus on Broadcast Journalism, achieving an impressive 88% marks in my final semester.</p>
+                <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                    <h3 class="text-md font-semibold text-gray-900">B.Voc in Broadcast Journalism</h3>
+                    <p class="text-gray-600 text-sm">Derozio Memorial College</p>
+                    <p class="text-xs text-gray-500 mt-1">2022-2025</p>
+                    <p class="mt-2 text-gray-700 text-sm">I completed my graduation with a focus on Broadcast Journalism, achieving an impressive 88% marks in my final semester.</p>
                 </div>
             </section>
 
             <!-- Skills Section -->
             <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <!-- Video Editing Skill Card -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Video Editing</h3>
-                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-md font-semibold text-gray-900 mb-2">Video Editing</h3>
+                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
                             <li>Primer Pro</li>
                             <li>Davinci Resolve</li>
                         </ul>
                     </div>
                     <!-- Motion Graphics Design Skill Card -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Motion Graphics Design</h3>
-                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-md font-semibold text-gray-900 mb-2">Motion Graphics Design</h3>
+                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
                             <li>After Effects</li>
                             <li>Photoshop</li>
                         </ul>
                     </div>
                     <!-- Sound Design Skill Card -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Sound Design</h3>
-                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-md font-semibold text-gray-900 mb-2">Sound Design</h3>
+                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
                             <li>Primer Pro</li>
                             <li>Adobe Audition</li>
                         </ul>
                     </div>
                     <!-- Color Grading Skill Card -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Color Grading</h3>
-                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-md font-semibold text-gray-900 mb-2">Color Grading</h3>
+                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
                             <li>Primer Pro</li>
                             <li>Davinci Resolve</li>
                         </ul>
                     </div>
                     <!-- AI Tools Skill Card -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">AI Tools</h3>
-                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-md font-semibold text-gray-900 mb-2">AI Tools</h3>
+                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
                             <li>ChatGPT: Proficient in image generation and information retrieval.</li>
                             <li>Gemini: Skilled in video creation, information retrieval, and basic coding.</li>
                         </ul>
                     </div>
                     <!-- Camera Operation Skill Card -->
-                    <div class="bg-white p-5 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">Camera Operation</h3>
-                        <p class="text-sm text-gray-700 mt-1">Clear understanding of camera fundamentals like Exposure, Shutter speed, ISO, and various shot angles.</p>
+                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
+                        <h3 class="text-md font-semibold text-gray-900 mb-2">Camera Operation</h3>
+                        <p class="text-xs text-gray-700 mt-1">Clear understanding of camera fundamentals like Exposure, Shutter speed, ISO, and various shot angles.</p>
                     </div>
                 </div>
             </section>
@@ -248,7 +266,7 @@
             <!-- Portfolio Link Section - Added as requested -->
             <section class="bg-gray-50 p-6 rounded-2xl shadow-sm text-center no-print">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">My Work</h2>
-                <p class="text-gray-700 leading-relaxed mb-6">
+                <p class="text-gray-700 leading-relaxed text-sm mb-6">
                     Interested in my creative projects? Click the button below to visit my portfolio website and see more of my work.
                 </p>
                 <a href="https://vdoadtr.github.io/Portfolio-VDOADTR/" target="_blank" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-md hover:bg-blue-700 transition-colors duration-300 glow-button">
@@ -259,7 +277,7 @@
             <!-- Contact Section with updated info -->
             <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
                 <h2 class="text-2xl font-bold text-gray-800 mb-4">Contact</h2>
-                <p class="text-gray-700 leading-relaxed">
+                <p class="text-gray-700 leading-relaxed text-sm">
                     If you are interested in working on a project or would just like to talk, please feel free to contact me.
                 </p>
                 <!-- Flexbox container to make buttons appear in a row on all screen sizes -->
@@ -274,7 +292,7 @@
                     </a>
                 </div>
                 <!-- Displaying the contact details directly for clarity -->
-                <div class="mt-6 text-center text-gray-600">
+                <div class="mt-6 text-center text-gray-600 text-sm">
                     <p class="font-medium">Email: vdoadtr@gmail.com</p>
                     <p class="font-medium">Phone: +91 9531661985</p>
                 </div>
@@ -290,7 +308,7 @@
         </main>
 
         <!-- Footer Section -->
-        <footer class="mt-10 text-center text-gray-500 text-sm">
+        <footer class="mt-10 text-center text-gray-500 text-xs">
             <p>&copy; 2025 Rakibul Malithya | All rights reserved.</p>
         </footer>
 
