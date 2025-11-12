@@ -94,6 +94,9 @@
         /* Style for the playlist navigation buttons (Carousel) */
         .carousel-btn {
             background-color: #4f46e5;
+            /* Added min-width/min-height for compact buttons */
+            min-width: 48px;
+            min-height: 48px;
             transition: background-color 0.3s, transform 0.1s;
         }
         .carousel-btn:hover {
@@ -109,25 +112,36 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- 1. Navigation Bar (Fixed Overlay with 30% opacity) --><header class="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-sm p-4 md:p-6 transition duration-300">
-        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+    <!-- 1. Navigation Bar (Fixed Overlay with 30% opacity) -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-sm p-4 md:p-6 transition duration-300">
+        <!-- Main Container: flex justify-between ensures Home is left and other links are right on ALL screens -->
+        <div class="container mx-auto flex justify-between items-center">
             
-            <!-- Left Group: JAGARAN (Above) and Home (Highlighted) --><div class="flex flex-col md:flex-row items-center mb-4 md:mb-0">
-                <!-- JAGARAN Text --><div class="text-3xl font-extrabold text-indigo-600 tracking-wider mb-2 md:mb-0 md:mr-6">
+            <!-- START OF LEFT GROUP: JAGARAN (Desktop) and Home (Always Left) -->
+            <div class="flex items-center space-x-4">
+                <!-- JAGARAN Text (Hidden on small screens, visible on medium screens and up) -->
+                <div class="hidden md:block text-3xl font-extrabold text-indigo-600 tracking-wider">
                     <a href="https://jagoronculturalsio.github.io/home/">JAGARAN</a>
                 </div>
-                <!-- Home Button (Highlighted/Active) --><a href="https://jagoronculturalsio.github.io/home/" id="homeButton" 
-                   class="nav-button nav-active px-4 py-2 rounded-lg transition duration-300">
+                
+                <!-- Home Button (Highlighted/Active) -->
+                <a href="https://jagoronculturalsio.github.io/home/" id="homeButton" 
+                   class="nav-button nav-active px-2 py-1 text-sm md:px-4 md:py-2 md:text-base rounded-lg transition duration-300">
                     Home
                 </a>
             </div>
+            <!-- END OF LEFT GROUP -->
             
-            <!-- Right Group: Nav Links (About, Contact, Location, Ticket) --><nav class="flex flex-wrap justify-center space-x-2 md:space-x-4 font-semibold">
-                <a href="https://jagoronculturalsio.github.io/about/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
-                <a href="https://jagoronculturalsio.github.io/contact/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
-                <a href="https://jagoronculturalsio.github.io/address/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
-                <!-- Ticket button --><button id="navTicketButton" 
-                    class="nav-button text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-300 shadow-sm border border-gray-200"
+            <!-- Right Group: Nav Links (About, Contact, Location, Ticket) -->
+            <!-- justify-end ensures buttons stick to the right on small screens -->
+            <nav class="flex flex-wrap justify-end space-x-2 md:space-x-4 font-semibold">
+                <!-- UPDATED: Navigation buttons made smaller on mobile (px-1 py-0.5) -->
+                <a href="https://jagoronculturalsio.github.io/about/" class="nav-button px-1 py-0.5 text-sm md:p-2 md:text-base rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="https://jagoronculturalsio.github.io/contact/" class="nav-button px-1 py-0.5 text-sm md:p-2 md:text-base rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <a href="https://jagoronculturalsio.github.io/address/" class="nav-button px-1 py-0.5 text-sm md:p-2 md:text-base rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <!-- Ticket button also made smaller on mobile -->
+                <button id="navTicketButton" 
+                    class="nav-button text-gray-700 px-1 py-0.5 text-sm md:px-4 md:py-2 md:text-base rounded-lg hover:bg-gray-100 transition duration-300 shadow-sm border border-gray-200"
                     onclick="handleTicketClick()">
                     Ticket
                 </button>
@@ -216,31 +230,41 @@
                 <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
             </section>
 
-            <!-- 4. UPDATED: Dynamic YouTube Playlist Carousel Section --><section id="playlist-section" class="py-10 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
+            <!-- 4. UPDATED: Dynamic YouTube Playlist Carousel Section -->
+            <!-- ADDED: px-4 sm:px-8 for horizontal padding on the section itself -->
+            <section id="playlist-section" class="py-10 px-4 sm:px-8 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN Playlist</h2>
                 
-                <!-- YouTube Player Container --><div class="video-container mx-4 md:mx-auto">
+                <!-- YouTube Player Container -->
+                <!-- REMOVED: mx-4 md:mx-auto to allow full width within the new section padding -->
+                <div class="video-container"> 
                     <!-- This div is the placeholder for the YouTube Player --><div id="playlistPlayer"></div> 
                 </div>
 
-                <!-- Navigation Controls and Video Counter --><div class="flex flex-col items-center mt-6 px-4">
+                <!-- Navigation Controls and Video Counter -->
+                <!-- REMOVED: px-4 from the controls div, relying on section padding -->
+                <div class="flex flex-col items-center mt-6"> 
                     <!-- Updated title text for single video mode --><p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
                         Video Loading...
                     </p>
                     
                     <div class="flex space-x-6">
-                        <!-- Previous Button --><button id="prevBtn" onclick="changePlaylistVideo(-1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
-                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
-                            Previous Video
+                        <!-- Previous Button (Only Icon) -->
+                        <button id="prevBtn" onclick="changePlaylistVideo(-1)" 
+                            class="carousel-btn text-white font-bold p-3 rounded-full shadow-lg flex items-center justify-center w-12 h-12" 
+                            disabled>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
                         </button>
                         
                         <!-- Video Counter & Status --><div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner min-w-[70px]">
                             Loading...
                         </div>
                         
-                        <!-- Next Button --><button id="nextBtn" onclick="changePlaylistVideo(1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
-                            Next Video
-                            <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <!-- Next Button (Only Icon) -->
+                        <button id="nextBtn" onclick="changePlaylistVideo(1)" 
+                            class="carousel-btn text-white font-bold p-3 rounded-full shadow-lg flex items-center justify-center w-12 h-12" 
+                            disabled>
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
                     </div>
                 </div>
