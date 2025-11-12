@@ -33,6 +33,7 @@
             overflow: hidden;
             border-radius: 0.75rem; /* rounded-xl */
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            background-color: #111827; /* Dark background for video loading/errors */
         }
         .video-container iframe,
         .video-container video {
@@ -42,8 +43,6 @@
             width: 100%;
             height: 100%;
         }
-        
-        /* Custom styles reverted to remove Reel/Shorts specific styling */
         
         /* Adjusting nav-button hover state for translucent background */
         .nav-button:hover {
@@ -91,6 +90,21 @@
         /* Ensure the toggle button is styled attractively */
         #toggleHighlightsBtn {
             min-width: 280px;
+        }
+
+        /* Style for the navigation buttons (Playlist Carousel) */
+        .carousel-btn {
+            background-color: #4f46e5;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+        .carousel-btn:hover {
+            background-color: #4338ca;
+            transform: scale(1.05);
+        }
+        .carousel-btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
         }
     </style>
 </head>
@@ -219,22 +233,48 @@
                 <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
             </section>
 
-            <!-- 4. UPDATED: YouTube Playlist Section (Replaced Reels) -->
+            <!-- 4. UPDATED: YouTube Playlist Carousel Section -->
             <section id="playlist-section" class="py-10 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN প্লেলিস্ট</h2>
                 
-                <!-- Playlist Embed Container (using the standard 16:9 class) -->
-                <div class="video-container mx-4 md:mx-auto">
-                    <!-- YouTube Playlist Embed URL: videoseries?list= is the key -->
+                <!-- Video Container -->
+                <div id="playlistVideoContainer" class="video-container mx-4 md:mx-auto">
+                    <!-- Dynamic Iframe will be loaded here -->
                     <iframe 
-                        src="https://www.youtube.com/embed/videoseries?list=h6eeDgBjZq8&autoplay=0&controls=1&modestbranding=1&rel=0" 
+                        id="playlistVideoFrame"
+                        src="" 
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
-                        title="JAGARAN Cultural Program Playlist">
+                        title="JAGARAN Cultural Program Playlist Video">
                     </iframe>
                 </div>
-                <p class="text-center text-sm text-gray-500 mt-4 mx-4">প্লেলিস্টের ভিডিওগুলি দেখার জন্য ডানদিকে উপরে থাকা প্লেলিস্ট আইকনে ক্লিক করুন।</p>
+
+                <!-- Navigation Controls and Video Counter -->
+                <div class="flex flex-col items-center mt-6">
+                    <p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
+                        <!-- Video title will be updated here -->
+                    </p>
+                    
+                    <div class="flex space-x-6">
+                        <!-- Previous Button -->
+                        <button id="prevBtn" onclick="changeVideo(-1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center">
+                            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
+                            আগের ভিডিও
+                        </button>
+                        
+                        <!-- Video Counter -->
+                        <div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner">
+                            1 / 3
+                        </div>
+                        
+                        <!-- Next Button -->
+                        <button id="nextBtn" onclick="changeVideo(1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center">
+                            পরবর্তী ভিডিও
+                            <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                    </div>
+                </div>
             </section>
             
             <!-- Placeholder anchors for navigation links -->
@@ -258,7 +298,23 @@
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
         const highlightsContent = document.getElementById('highlights-content');
         const toggleIcon = document.getElementById('toggleIcon');
-        const mainVideoFrame = document.getElementById('mainVideoFrame');
+        
+        // --- Playlist Carousel Variables and Data ---
+        const playlistVideoFrame = document.getElementById('playlistVideoFrame');
+        const videoCounter = document.getElementById('videoCounter');
+        const videoTitleDisplay = document.getElementById('videoTitle');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        // Hardcoded list of video IDs and titles from the JAGARAN playlist.
+        // NOTE: If the full YouTube API was available, this data would be fetched dynamically.
+        const playlistVideos = [
+            { id: 'h6eeDgBjZq8', title: 'JAGARAN: Cultural Festival Full Event' }, // Using the Playlist ID as the main video
+            { id: 'AHaHWbnkPx0', title: 'Highlight: Inauguration Ceremony Reel' }, // Previous Reel ID
+            { id: 'mc1xggktlro', title: 'Welcome and Program Details' } // Previous Main Video ID
+        ];
+        
+        let currentVideoIndex = 0;
 
         // --- Firebase/Auth Setup (Mandatory in this environment) ---
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
@@ -286,8 +342,31 @@
             }
         }
         
-        // --- Cleaned up logic: Removed the complex Reels Carousel & Observer code. 
-        // We only keep the initialization logic now.
+        // --- Interaction Logic: Video Carousel ---
+
+        function updateVideoPlayer() {
+            const video = playlistVideos[currentVideoIndex];
+            
+            // Construct the YouTube embed URL for a single video ID
+            const embedUrl = `https://www.youtube.com/embed/${video.id}?autoplay=0&controls=1&modestbranding=1&rel=0`;
+            
+            playlistVideoFrame.src = embedUrl;
+            videoCounter.textContent = `${currentVideoIndex + 1} / ${playlistVideos.length}`;
+            videoTitleDisplay.textContent = video.title;
+
+            // Enable/Disable buttons based on current index
+            prevBtn.disabled = currentVideoIndex === 0;
+            nextBtn.disabled = currentVideoIndex === playlistVideos.length - 1;
+        }
+
+        window.changeVideo = function(direction) {
+            let newIndex = currentVideoIndex + direction;
+
+            if (newIndex >= 0 && newIndex < playlistVideos.length) {
+                currentVideoIndex = newIndex;
+                updateVideoPlayer();
+            }
+        }
 
         // Initialize events on load
         window.addEventListener('load', () => {
@@ -295,8 +374,9 @@
             if (toggleHighlightsBtn) {
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
-            // Since the complex playback logic is removed, the main video will just 
-            // follow its autoplay/loop settings from the iframe src.
+            
+            // Initialize the playlist video player
+            updateVideoPlayer();
         });
 
     </script>
