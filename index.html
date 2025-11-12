@@ -11,6 +11,13 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- 
+        Mandatory YouTube IFrame Player API Script
+        This script allows us to control the embedded YouTube player (like changing videos).
+    -->
+    <script async src="https://www.youtube.com/iframe_api"></script>
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -24,7 +31,7 @@
             width: 100%;
         }
         
-        /* Standard 16:9 Aspect Ratio Container for Main Video & Playlist */
+        /* Standard 16:9 Aspect Ratio Container for Video */
         .video-container {
             position: relative;
             width: 100%;
@@ -35,8 +42,7 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             background-color: #111827; /* Dark background for video loading/errors */
         }
-        .video-container iframe,
-        .video-container video {
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -44,12 +50,11 @@
             height: 100%;
         }
         
-        /* Adjusting nav-button hover state for translucent background */
+        /* Navigation styles */
         .nav-button:hover {
             color: #4f46e5;
             background-color: rgba(255, 255, 255, 0.6); 
         }
-        /* Style for the ticket button */
         .ticket-button-cta {
             background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
             transition: transform 0.2s, box-shadow 0.2s;
@@ -58,14 +63,13 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(79, 70, 229, 0.5);
         }
-        /* Highlight style for active navigation links */
         .nav-active {
-            background-color: #4f46e5; /* indigo-600 */
+            background-color: #4f46e5;
             color: #ffffff;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
         .nav-active:hover {
-            background-color: #4338ca; /* indigo-700 */
+            background-color: #4338ca;
             color: #ffffff;
         }
         
@@ -83,16 +87,14 @@
             overflow: hidden;
             transition: max-height 0.5s ease-in-out; 
         }
-        /* Style for the button's icon rotation */
         .rotated-icon {
             transform: rotate(180deg) !important;
         }
-        /* Ensure the toggle button is styled attractively */
         #toggleHighlightsBtn {
             min-width: 280px;
         }
 
-        /* Style for the navigation buttons (Playlist Carousel) */
+        /* Style for the playlist navigation buttons (Carousel) */
         .carousel-btn {
             background-color: #4f46e5;
             transition: background-color 0.3s, transform 0.1s;
@@ -131,7 +133,6 @@
             <nav class="flex flex-wrap justify-center space-x-2 md:space-x-4 font-semibold">
                 <a href="https://jagoronculturalsio.github.io/about/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
                 <a href="https://jagoronculturalsio.github.io/contact/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
-                <!-- Navigation link updated in previous turn: 'Address' changed to 'Location' -->
                 <a href="https://jagoronculturalsio.github.io/address/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
                 <!-- Ticket button -->
                 <button id="navTicketButton" 
@@ -233,43 +234,37 @@
                 <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
             </section>
 
-            <!-- 4. UPDATED: YouTube Playlist Carousel Section -->
+            <!-- 4. UPDATED: Dynamic YouTube Playlist Carousel Section -->
             <section id="playlist-section" class="py-10 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN প্লেলিস্ট</h2>
                 
-                <!-- Video Container -->
-                <div id="playlistVideoContainer" class="video-container mx-4 md:mx-auto">
-                    <!-- Dynamic Iframe will be loaded here -->
-                    <iframe 
-                        id="playlistVideoFrame"
-                        src="" 
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                        title="JAGARAN Cultural Program Playlist Video">
-                    </iframe>
+                <!-- YouTube Player Container -->
+                <div class="video-container mx-4 md:mx-auto">
+                    <!-- This div is the placeholder for the YouTube Player -->
+                    <div id="playlistPlayer"></div> 
                 </div>
 
                 <!-- Navigation Controls and Video Counter -->
-                <div class="flex flex-col items-center mt-6">
+                <div class="flex flex-col items-center mt-6 px-4">
+                    <!-- Updated title text for single video mode -->
                     <p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
-                        <!-- Video title will be updated here -->
+                        ভিডিও লোড হচ্ছে...
                     </p>
                     
                     <div class="flex space-x-6">
                         <!-- Previous Button -->
-                        <button id="prevBtn" onclick="changeVideo(-1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center">
+                        <button id="prevBtn" onclick="changePlaylistVideo(-1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
                             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
                             আগের ভিডিও
                         </button>
                         
-                        <!-- Video Counter -->
-                        <div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner">
-                            1 / 3
+                        <!-- Video Counter & Status -->
+                        <div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner min-w-[70px]">
+                            লোড হচ্ছে...
                         </div>
                         
                         <!-- Next Button -->
-                        <button id="nextBtn" onclick="changeVideo(1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center">
+                        <button id="nextBtn" onclick="changePlaylistVideo(1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
                             পরবর্তী ভিডিও
                             <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
@@ -293,29 +288,21 @@
     <script>
         // --- Configuration & Initialization ---
         const TICKET_LINK = "https://jagoronculturalsio.github.io/ticket/"; 
+        // UPDATED: Using the provided Playlist ID to enable the carousel functionality.
+        const PLAYLIST_ID = "PLW-zSkCnZ-gABGZU8--ISUauyewG40Yex"; 
         
-        // --- NEW Variables for Highlights Toggle ---
+        // --- Variables for Highlights Toggle ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
         const highlightsContent = document.getElementById('highlights-content');
         const toggleIcon = document.getElementById('toggleIcon');
-        
-        // --- Playlist Carousel Variables and Data ---
-        const playlistVideoFrame = document.getElementById('playlistVideoFrame');
+
+        // --- Playlist Carousel Variables ---
+        let player; // Global variable for the YouTube Player object
         const videoCounter = document.getElementById('videoCounter');
         const videoTitleDisplay = document.getElementById('videoTitle');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         
-        // Hardcoded list of video IDs and titles from the JAGARAN playlist.
-        // NOTE: If the full YouTube API was available, this data would be fetched dynamically.
-        const playlistVideos = [
-            { id: 'h6eeDgBjZq8', title: 'JAGARAN: Cultural Festival Full Event' }, // Using the Playlist ID as the main video
-            { id: 'AHaHWbnkPx0', title: 'Highlight: Inauguration Ceremony Reel' }, // Previous Reel ID
-            { id: 'mc1xggktlro', title: 'Welcome and Program Details' } // Previous Main Video ID
-        ];
-        
-        let currentVideoIndex = 0;
-
         // --- Firebase/Auth Setup (Mandatory in this environment) ---
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
@@ -330,41 +317,103 @@
             const isExpanded = toggleHighlightsBtn.getAttribute('aria-expanded') === 'true';
 
             if (isExpanded) {
-                // Collapse the content
                 highlightsContent.style.maxHeight = '0';
                 toggleHighlightsBtn.setAttribute('aria-expanded', 'false');
                 toggleIcon.classList.remove('rotated-icon');
             } else {
-                // Expand the content
                 highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
                 toggleHighlightsBtn.setAttribute('aria-expanded', 'true');
                 toggleIcon.classList.add('rotated-icon');
             }
         }
         
-        // --- Interaction Logic: Video Carousel ---
-
-        function updateVideoPlayer() {
-            const video = playlistVideos[currentVideoIndex];
-            
-            // Construct the YouTube embed URL for a single video ID
-            const embedUrl = `https://www.youtube.com/embed/${video.id}?autoplay=0&controls=1&modestbranding=1&rel=0`;
-            
-            playlistVideoFrame.src = embedUrl;
-            videoCounter.textContent = `${currentVideoIndex + 1} / ${playlistVideos.length}`;
-            videoTitleDisplay.textContent = video.title;
-
-            // Enable/Disable buttons based on current index
-            prevBtn.disabled = currentVideoIndex === 0;
-            nextBtn.disabled = currentVideoIndex === playlistVideos.length - 1;
+        // --- YouTube Player API Functions ---
+        
+        // This function is called automatically by the YouTube API script 
+        window.onYouTubeIframeAPIReady = function() {
+            // Create the YouTube player instance
+            player = new YT.Player('playlistPlayer', {
+                height: '100%',
+                width: '100%',
+                playerVars: {
+                    // Re-enabling playlist mode:
+                    'listType': 'playlist', 
+                    'list': PLAYLIST_ID, 
+                    'controls': 1,
+                    'modestbranding': 1,
+                    'rel': 0,
+                    'autoplay': 0 // We don't want it to auto-play on load
+                },
+                events: {
+                    'onReady': onPlayerReady,
+                    'onStateChange': onPlayerStateChange
+                }
+            });
         }
 
-        window.changeVideo = function(direction) {
-            let newIndex = currentVideoIndex + direction;
+        function onPlayerReady(event) {
+            console.log("YouTube Playlist Player is Ready.");
+            // Initial update when the player is loaded
+            updateCarouselStatus();
+        }
+        
+        function onPlayerStateChange(event) {
+            // Update status whenever the video changes or state changes (e.g., video ends)
+            if (event.data === YT.PlayerState.PLAYING || event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+                updateCarouselStatus();
+            }
+            // If the video ends, automatically go to the next video (optional but good for carousels)
+            if (event.data === YT.PlayerState.ENDED) {
+                // We use nextVideo() here, but the updateCarouselStatus will handle disabling the button if it's the last video.
+                changePlaylistVideo(1); 
+            }
+        }
 
-            if (newIndex >= 0 && newIndex < playlistVideos.length) {
-                currentVideoIndex = newIndex;
-                updateVideoPlayer();
+        // Main function to update the button status and counter/title
+        function updateCarouselStatus() {
+            try {
+                const playlistLength = player.getPlaylist().length;
+                // getPlaylistIndex returns 0-based index. We convert to 1-based for display.
+                const playlistIndex = player.getPlaylistIndex() + 1; 
+
+                // 1. Update Counter
+                videoCounter.textContent = `${playlistIndex} / ${playlistLength}`;
+
+                // 2. Update Title
+                const videoData = player.getVideoData();
+                if (videoData && videoData.title) {
+                    videoTitleDisplay.textContent = videoData.title;
+                } else {
+                    videoTitleDisplay.textContent = `ভিডিও লোড হচ্ছে...`;
+                }
+
+                // 3. Update Buttons
+                prevBtn.disabled = (playlistIndex <= 1);
+                nextBtn.disabled = (playlistIndex >= playlistLength);
+
+            } catch (error) {
+                console.warn("Player data not fully available yet. Retrying update.");
+                // Fallback for initial load race condition
+                videoCounter.textContent = `লোড হচ্ছে...`;
+                prevBtn.disabled = true;
+                nextBtn.disabled = true;
+                // Retry in half a second
+                setTimeout(updateCarouselStatus, 500); 
+            }
+        }
+        
+        // Function called by the buttons to change the video
+        window.changePlaylistVideo = function(direction) {
+            if (player) {
+                if (direction === 1) {
+                    // Go to next video
+                    player.nextVideo();
+                } else if (direction === -1) {
+                    // Go to previous video
+                    player.previousVideo();
+                }
+                // Give a moment for the new video data to load before updating status
+                setTimeout(updateCarouselStatus, 200); 
             }
         }
 
@@ -375,8 +424,7 @@
                 toggleHighlightsBtn.addEventListener('click', toggleHighlights);
             }
             
-            // Initialize the playlist video player
-            updateVideoPlayer();
+            // Note: onYouTubeIframeAPIReady handles player initialization automatically.
         });
 
     </script>
