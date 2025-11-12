@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JAGARAN - Annual Cultural Program</title>
-    <!-- Favicon (Logo) -->
-    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczNHbNhABZ8BJa0UFNNNDlNH4OXE_ozWBGv0HGcMbg-MiLM_ppe7VJPp8MgvJaMdFsr1RgZcJ7_alcy_hExCHAg2femF59oom5YeT90gFC_TeHGONBPJ2eNqeY8ESILp7GSXEIDGY_EXlKIvUu-Jt1M=w953-h953-s-no-gm?authuser=0">
+    <!-- Favicon (Logo) --><link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczNHbNhABZ8BJa0UFNNNDlNH4OXE_ozWBGv0HGcMbg-MiLM_ppe7VJPp8MgvJaMdFsr1RgZcJ7_alcy_hExCHAg2femF59oom5YeT7VJPp8MgvJaMdFsr1RgZcJ7_alcy_hExCHAg2femF59oom5YeT90gFC_TeHGONBPJ2eNqeY8ESILp7GSXEIDGY_EXlKIvUu-Jt1M=w953-h953-s-no-gm?authuser=0">
     
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font --><link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
     <!-- 
         Mandatory YouTube IFrame Player API Script
         This script allows us to control the embedded YouTube player (like changing videos).
-    -->
-    <script async src="https://www.youtube.com/iframe_api"></script>
+    --><script async src="https://www.youtube.com/iframe_api"></script>
 
     <style>
         body {
@@ -25,7 +21,8 @@
         }
         /* Custom CSS for the full-width banner image */
         .banner-image {
-            background-image: url('https://lh3.googleusercontent.com/pw/AP1GczM_1MBPvNoH0fhsAT23iapbzMqAyosqu4WpEJ4mhrD-Irg5pB5dZE90NwL7KifjjXqe_7EcNQkRHpzyUr1R3HVONY2HmQ91jeP28BDxOa-AodBBGe-4gUDy8NpGxiNbxqadAqYJJdd9ldyFPm-w9M=w1920-h378-s-no-gm?authuser=0');
+            /* UPDATED: Using the new banner image URL provided by the user. */
+            background-image: url('https://lh3.googleusercontent.com/pw/AP1GczMjl8jXZqHC8oBYxmttpAaMkuSNv4tShvQ1P1gveMAkzaRoB-l8wSp5NT3dWXTTBB0F90KW-5W3d2dRJYdOqjGFJhvy8XtiLd9gnkwQnqH6uj3tpS9w8z8-OiBFEu96DHCA6ucwO4Vf6AvJ7D00R6U=w1920-h378-s-no-gm?authuser=0');
             background-size: cover;
             background-position: center;
             width: 100%;
@@ -112,30 +109,24 @@
 </head>
 <body class="min-h-screen">
 
-    <!-- 1. Navigation Bar (Fixed Overlay with 30% opacity) -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-sm p-4 md:p-6 transition duration-300">
+    <!-- 1. Navigation Bar (Fixed Overlay with 30% opacity) --><header class="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-sm p-4 md:p-6 transition duration-300">
         <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
             
-            <!-- Left Group: JAGARAN (Above) and Home (Highlighted) -->
-            <div class="flex flex-col md:flex-row items-center mb-4 md:mb-0">
-                <!-- JAGARAN Text -->
-                <div class="text-3xl font-extrabold text-indigo-600 tracking-wider mb-2 md:mb-0 md:mr-6">
+            <!-- Left Group: JAGARAN (Above) and Home (Highlighted) --><div class="flex flex-col md:flex-row items-center mb-4 md:mb-0">
+                <!-- JAGARAN Text --><div class="text-3xl font-extrabold text-indigo-600 tracking-wider mb-2 md:mb-0 md:mr-6">
                     <a href="https://jagoronculturalsio.github.io/home/">JAGARAN</a>
                 </div>
-                <!-- Home Button (Highlighted/Active) -->
-                <a href="https://jagoronculturalsio.github.io/home/" id="homeButton" 
+                <!-- Home Button (Highlighted/Active) --><a href="https://jagoronculturalsio.github.io/home/" id="homeButton" 
                    class="nav-button nav-active px-4 py-2 rounded-lg transition duration-300">
                     Home
                 </a>
             </div>
             
-            <!-- Right Group: Nav Links (About, Contact, Location, Ticket) -->
-            <nav class="flex flex-wrap justify-center space-x-2 md:space-x-4 font-semibold">
+            <!-- Right Group: Nav Links (About, Contact, Location, Ticket) --><nav class="flex flex-wrap justify-center space-x-2 md:space-x-4 font-semibold">
                 <a href="https://jagoronculturalsio.github.io/about/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
                 <a href="https://jagoronculturalsio.github.io/contact/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
                 <a href="https://jagoronculturalsio.github.io/address/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
-                <!-- Ticket button -->
-                <button id="navTicketButton" 
+                <!-- Ticket button --><button id="navTicketButton" 
                     class="nav-button text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-300 shadow-sm border border-gray-200"
                     onclick="handleTicketClick()">
                     Ticket
@@ -144,14 +135,11 @@
         </div>
     </header>
 
-    <!-- 2. Banner/Hero Section (Full Width) -->
-    <div id="banner" class="banner-image w-full h-[35vh] md:h-[40vh] mt-[70px] md:mt-[92px]"></div>
+    <!-- 2. Banner/Hero Section (Full Width) --><div id="banner" class="banner-image w-full h-[35vh] md:h-[40vh] mt-[70px] md:mt-[92px]"></div>
     
-    <!-- 3. Main Content Wrapper (Centered) -->
-    <div id="app-content" class="container mx-auto p-4 md:p-8 pt-0">
+    <!-- 3. Main Content Wrapper (Centered) --><div id="app-content" class="container mx-auto p-4 md:p-8 pt-0">
 
-        <!-- Main Title Section (BELOW BANNER) -->
-        <section id="home" class="text-center pt-8">
+        <!-- Main Title Section (BELOW BANNER) --><section id="home" class="text-center pt-8">
             <h1 class="text-4xl md:text-6xl font-black text-gray-800 mb-4">
                 <span class="text-indigo-600">JAGARAN</span> Cultural Festival
             </h1>
@@ -160,12 +148,10 @@
 
         <main class="space-y-16">
 
-            <!-- 1. Main YouTube Video Section -->
-            <section id="main-video-section" class="max-w-4xl mx-auto" aria-label="Program Details Video">
+            <!-- 1. Main YouTube Video Section --><section id="main-video-section" class="max-w-4xl mx-auto" aria-label="Program Details Video">
                 <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">A warm welcome to all of you at our festival.</h2>
                 <div id="mainVideoContainer" class="video-container">
-                    <!-- Main Video Iframe -->
-                    <iframe 
+                    <!-- Main Video Iframe --><iframe 
                         id="mainVideoFrame"
                         src="https://www.youtube.com/embed/mc1xggktlro?autoplay=1&loop=1&playlist=mc1xggktlro&controls=0&playsinline=1"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
@@ -176,8 +162,7 @@
                 </div>
             </section>
 
-            <!-- 2. Description Section -->
-            <section id="description-section" class="max-w-4xl mx-auto">
+            <!-- 2. Description Section --><section id="description-section" class="max-w-4xl mx-auto">
                 <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">Description</h2>
                 <div class="description-card">
                     <p class="text-gray-700 text-base mb-4">
@@ -195,8 +180,7 @@
                 </div>
             </section>
             
-            <!-- NEW: Festival Highlights Toggle Section -->
-            <section id="highlights-toggle-section" class="max-w-4xl mx-auto py-8">
+            <!-- NEW: Festival Highlights Toggle Section --><section id="highlights-toggle-section" class="max-w-4xl mx-auto py-8">
                 <div class="text-center">
                     <button id="toggleHighlightsBtn" 
                         class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 flex items-center justify-center mx-auto"
@@ -207,8 +191,7 @@
                     </button>
                 </div>
                 
-                <!-- Collapsible Content -->
-                <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
+                <!-- Collapsible Content --><div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
                     <div class="description-card p-6 md:p-8 bg-indigo-50 border border-indigo-200">
                         <h3 class="text-2xl font-extrabold text-indigo-700 mb-4 border-b pb-2">Main Attractions</h3>
                         <ul class="space-y-3 text-left text-gray-700 list-disc pl-5">
@@ -223,8 +206,7 @@
                 </div>
             </section>
 
-            <!-- 3. BOOK TICKET Call-to-Action (CTA) Button -->
-            <section class="text-center py-8">
+            <!-- 3. BOOK TICKET Call-to-Action (CTA) Button --><section class="text-center py-8">
                 <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Ready to Join the Celebration?</h2>
                 <button id="ctaTicketButton" 
                     class="ticket-button-cta text-white font-bold text-xl px-12 py-4 rounded-full shadow-2xl uppercase tracking-wider"
@@ -234,54 +216,44 @@
                 <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
             </section>
 
-            <!-- 4. UPDATED: Dynamic YouTube Playlist Carousel Section -->
-            <section id="playlist-section" class="py-10 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN প্লেলিস্ট</h2>
+            <!-- 4. UPDATED: Dynamic YouTube Playlist Carousel Section --><section id="playlist-section" class="py-10 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN Playlist</h2>
                 
-                <!-- YouTube Player Container -->
-                <div class="video-container mx-4 md:mx-auto">
-                    <!-- This div is the placeholder for the YouTube Player -->
-                    <div id="playlistPlayer"></div> 
+                <!-- YouTube Player Container --><div class="video-container mx-4 md:mx-auto">
+                    <!-- This div is the placeholder for the YouTube Player --><div id="playlistPlayer"></div> 
                 </div>
 
-                <!-- Navigation Controls and Video Counter -->
-                <div class="flex flex-col items-center mt-6 px-4">
-                    <!-- Updated title text for single video mode -->
-                    <p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
-                        ভিডিও লোড হচ্ছে...
+                <!-- Navigation Controls and Video Counter --><div class="flex flex-col items-center mt-6 px-4">
+                    <!-- Updated title text for single video mode --><p id="videoTitle" class="text-lg font-semibold text-gray-800 mb-4 text-center h-6 overflow-hidden">
+                        Video Loading...
                     </p>
                     
                     <div class="flex space-x-6">
-                        <!-- Previous Button -->
-                        <button id="prevBtn" onclick="changePlaylistVideo(-1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
+                        <!-- Previous Button --><button id="prevBtn" onclick="changePlaylistVideo(-1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
                             <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg> 
-                            আগের ভিডিও
+                            Previous Video
                         </button>
                         
-                        <!-- Video Counter & Status -->
-                        <div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner min-w-[70px]">
-                            লোড হচ্ছে...
+                        <!-- Video Counter & Status --><div id="videoCounter" class="flex items-center justify-center text-xl font-bold text-indigo-600 bg-indigo-100 px-4 rounded-full shadow-inner min-w-[70px]">
+                            Loading...
                         </div>
                         
-                        <!-- Next Button -->
-                        <button id="nextBtn" onclick="changePlaylistVideo(1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
-                            পরবর্তী ভিডিও
+                        <!-- Next Button --><button id="nextBtn" onclick="changePlaylistVideo(1)" class="carousel-btn text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center" disabled>
+                            Next Video
                             <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </button>
                     </div>
                 </div>
             </section>
             
-            <!-- Placeholder anchors for navigation links -->
-            <div id="about-placeholder"></div>
+            <!-- Placeholder anchors for navigation links --><div id="about-placeholder"></div>
             <div id="contact-placeholder"></div>
             <div id="address-placeholder"></div>
 
         </main>
     </div>
 
-    <!-- Footer/Copyright Section -->
-    <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
+    <!-- Footer/Copyright Section --><footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
         <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
     </footer>
 
@@ -386,7 +358,7 @@
                 if (videoData && videoData.title) {
                     videoTitleDisplay.textContent = videoData.title;
                 } else {
-                    videoTitleDisplay.textContent = `ভিডিও লোড হচ্ছে...`;
+                    videoTitleDisplay.textContent = `Video Loading...`;
                 }
 
                 // 3. Update Buttons
@@ -396,15 +368,15 @@
             } catch (error) {
                 console.warn("Player data not fully available yet or there is an issue with the playlist. Retrying update or showing error message.");
                 // If it fails after a few retries, it's likely the embedding restriction error again.
-                videoCounter.textContent = `ত্রুটি!`;
-                videoTitleDisplay.textContent = `প্লেলিস্ট লোড করতে সমস্যা হচ্ছে।`;
+                videoCounter.textContent = `Error!`;
+                videoTitleDisplay.textContent = `Trouble loading playlist.`;
                 prevBtn.disabled = true;
                 nextBtn.disabled = true;
                 // Note: The YouTube player will display its own error message (like the screenshot) if embedding is disabled.
                 
                 // Fallback retry for initial load race condition
                 // Only retry once to avoid infinite loops if it's a genuine error.
-                if (videoCounter.textContent === 'লোড হচ্ছে...') {
+                if (videoCounter.textContent === 'Loading...') {
                     setTimeout(updateCarouselStatus, 500); 
                 }
             }
