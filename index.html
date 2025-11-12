@@ -25,7 +25,7 @@
         }
         /* Custom CSS for the full-width banner image */
         .banner-image {
-            background-image: url('https://lh3.googleusercontent.com/pw/AP1GczM_1MBPvNoH0fhsAT23iapbzMqAyosqu4WpEJ4mhrD-Irg5pB5dZE90NwL7KifjjXqe_7EcNQkRHXpzyUr1R3HVONY2HmQ91jeP28BDxOa-AodBBGe-4gUDy8NpGxiNbxqadAqYJJdd9ldyFPm-w9M=w1920-h378-s-no-gm?authuser=0');
+            background-image: url('https://lh3.googleusercontent.com/pw/AP1GczM_1MBPvNoH0fhsAT23iapbzMqAyosqu4WpEJ4mhrD-Irg5pB5dZE90NwL7KifjjXqe_7EcNQkRHpzyUr1R3HVONY2HmQ91jeP28BDxOa-AodBBGe-4gUDy8NpGxiNbxqadAqYJJdd9ldyFPm-w9M=w1920-h378-s-no-gm?authuser=0');
             background-size: cover;
             background-position: center;
             width: 100%;
@@ -289,7 +289,7 @@
         // --- Configuration & Initialization ---
         const TICKET_LINK = "https://jagoronculturalsio.github.io/ticket/"; 
         // UPDATED: Using the provided Playlist ID to enable the carousel functionality.
-        const PLAYLIST_ID = "PLW-zSkCnZ-gABGZU8--ISUauyewG40Yex"; 
+        const PLAYLIST_ID = "PLGhDEZQb-0gCrSAjpAvdXU2fLKWMbRvRm"; // <--- New Playlist ID added here
         
         // --- Variables for Highlights Toggle ---
         const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
@@ -372,6 +372,8 @@
         // Main function to update the button status and counter/title
         function updateCarouselStatus() {
             try {
+                // IMPORTANT: The player might throw an error if the playlist is restricted. 
+                // We assume getPlaylist() will work if the playlist is embeddable.
                 const playlistLength = player.getPlaylist().length;
                 // getPlaylistIndex returns 0-based index. We convert to 1-based for display.
                 const playlistIndex = player.getPlaylistIndex() + 1; 
@@ -392,13 +394,19 @@
                 nextBtn.disabled = (playlistIndex >= playlistLength);
 
             } catch (error) {
-                console.warn("Player data not fully available yet. Retrying update.");
-                // Fallback for initial load race condition
-                videoCounter.textContent = `লোড হচ্ছে...`;
+                console.warn("Player data not fully available yet or there is an issue with the playlist. Retrying update or showing error message.");
+                // If it fails after a few retries, it's likely the embedding restriction error again.
+                videoCounter.textContent = `ত্রুটি!`;
+                videoTitleDisplay.textContent = `প্লেলিস্ট লোড করতে সমস্যা হচ্ছে।`;
                 prevBtn.disabled = true;
                 nextBtn.disabled = true;
-                // Retry in half a second
-                setTimeout(updateCarouselStatus, 500); 
+                // Note: The YouTube player will display its own error message (like the screenshot) if embedding is disabled.
+                
+                // Fallback retry for initial load race condition
+                // Only retry once to avoid infinite loops if it's a genuine error.
+                if (videoCounter.textContent === 'লোড হচ্ছে...') {
+                    setTimeout(updateCarouselStatus, 500); 
+                }
             }
         }
         
