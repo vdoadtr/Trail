@@ -1,318 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Basic meta tags for responsiveness and character encoding -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Website title visible in the browser tab -->
-    <!-- The user requested "VDOADTR CV" as the title -->
-    <title>VDOADTR CV</title>
-    <!-- Favicon as requested by the user -->
-    <link rel="icon" href="https://lh3.googleusercontent.com/pw/AP1GczPX0sCcMMwD8I5-REdo-keNM5TZU_HBKxEyV0chdP7f9xPpS_JDxkBEmoYxk7H42DF7Vcdl7oOnSjjiDg1K0W7DrORhQtFWWnQQDKdY3vn9wUncS9UG1zTFarY7M3HQDfuMeTJt22qoIEOrImTck23L=w945-h945-s-no-gm?authuser=0" type="image/x-icon">
-    <!-- Google Fonts for a modern, clean look -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS CDN for easy styling -->
+    <title>JAGARAN - Annual Cultural Program</title>
+    <!-- Favicon (Logo) -->
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczNHbNhABZ8BJa0UFNNNDlNH4OXE_ozWBGv0HGcMbg-MiLM_ppe7VJPp8MgvJaMdFsr1RgZcJ7_alcy_hExCHAg2femF59oom5YeT90gFC_TeHGONBPJ2eNqeY8ESILp7GSXEIDGY_EXlKIvUu-Jt1M=w953-h953-s-no-gm?authuser=0">
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom styles to set the font family and some basic overrides -->
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7;
         }
-        /* Custom CSS for the glowing effect on the button */
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6;
-            }
-            50% {
-                box-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6;
-            }
-            100% {
-                box-shadow: 0 0 5px #3b82f6, 0 0 10px #3b82f6;
-            }
+        /* Custom CSS for the full-width banner image */
+        .banner-image {
+            background-image: url('https://lh3.googleusercontent.com/pw/AP1GczM_1MBPvNoH0fhsAT23iapbzMqAyosqu4WpEJ4mhrD-Irg5pB5dZE90NwL7KifjjXqe_7EcNQkRHXpzyUr1R3HVONY2HmQ91jeP28BDxOa-AodBBGe-4gUDy8NpGxiNbxqadAqYJJdd9ldyFPm-w9M=w1920-h378-s-no-gm?authuser=0');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
         }
-        .glow-button {
-            animation: glow 1.5s ease-in-out infinite alternate;
+        
+        /* Standard 16:9 Aspect Ratio Container for Main Video & Playlist */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
-        /* Custom CSS for the text gradient effect as requested by the user */
-        .vdo-gradient {
-            background: linear-gradient(to bottom, #1d4ed8, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .video-container iframe,
+        .video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Custom styles reverted to remove Reel/Shorts specific styling */
+        
+        /* Adjusting nav-button hover state for translucent background */
+        .nav-button:hover {
+            color: #4f46e5;
+            background-color: rgba(255, 255, 255, 0.6); 
+        }
+        /* Style for the ticket button */
+        .ticket-button-cta {
+            background: linear-gradient(90deg, #4f46e5 0%, #8b5cf6 100%);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .ticket-button-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(79, 70, 229, 0.5);
+        }
+        /* Highlight style for active navigation links */
+        .nav-active {
+            background-color: #4f46e5; /* indigo-600 */
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .nav-active:hover {
+            background-color: #4338ca; /* indigo-700 */
+            color: #ffffff;
+        }
+        
+        /* Style for the description section */
+        .description-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            line-height: 1.6;
         }
 
-        /*
-         * Print-specific styles for A4 page.
-         * This media query applies only when the user is trying to print the page.
-         */
-        @media print {
-            body {
-                background-color: #fff; /* White background for printing */
-                font-size: 10pt; /* Smaller font for better fit on A4 */
-                margin: 0;
-                padding: 0;
-            }
-
-            /* Hide elements that are not necessary for a printed CV */
-            .no-print {
-                display: none !important;
-            }
-
-            /* Adjust margins and padding for a clean A4 layout */
-            .print-container {
-                box-shadow: none;
-                border: none;
-                padding: 1cm;
-                margin: 0;
-            }
-
-            /* Remove backgrounds and shadows to save ink */
-            section, header, .job-card, .skill-card {
-                background-color: #fff !important;
-                box-shadow: none !important;
-                padding: 0;
-            }
-
-            /* Ensure all content flows in a single column for printing */
-            .grid-cols-1, .md\:grid-cols-2 {
-                display: block;
-                gap: 0;
-            }
-            
-            /* Remove margins between sections to tighten the layout */
-            section {
-                margin: 0;
-                padding: 0.5rem 0;
-            }
-
-            /* Add page breaks to avoid splitting sections awkwardly */
-            section {
-                page-break-inside: avoid;
-            }
-            
-            /* Reduce space between list items */
-            li {
-                margin-top: 0;
-                margin-bottom: 0;
-            }
-            
-            /* Reduce padding on the main container */
-            .p-6, .sm\:p-10 {
-                padding: 0;
-            }
+        /* Styles for the collapsible Highlights content */
+        .highlights-collapse {
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out; 
+        }
+        /* Style for the button's icon rotation */
+        .rotated-icon {
+            transform: rotate(180deg) !important;
+        }
+        /* Ensure the toggle button is styled attractively */
+        #toggleHighlightsBtn {
+            min-width: 280px;
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900 min-h-screen flex items-center justify-center p-4 sm:p-8">
+<body class="min-h-screen">
 
-    <!-- Main container for the website content -->
-    <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl w-full p-6 sm:p-10 print-container">
-        
-        <!-- Header Section with a dark background to make the white text pop -->
-        <!-- User requested a lighter dark background and a drop shadow on the text -->
-        <header class="text-center mb-6 bg-gray-800 p-6 rounded-2xl shadow-xl">
-            <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-full mx-auto mb-4 bg-gray-200 flex items-center justify-center overflow-hidden">
-                <!-- Profile picture based on your uploaded CV -->
-                <img 
-                    src="https://lh3.googleusercontent.com/pw/AP1GczOUscoOaUbAVoXOOxCZM6-6DSRh1FY4XRGesTlu8gULQUkamUpdRRpruZej4Sj0eMOwXU6qvm43evX_U9BXkSYnwe0g-NI4eOfr7798h-z8aAXqRaBHfWSKIPl3TvGoMTFQivclxX8_bcEMz1MlQYT0=w1280-h720-s-no-gm?authuser=0"
-                    alt="Rakibul Malithya's profile picture"
-                    class="w-full h-full object-cover"
-                    onerror="this.src='https://placehold.co/192x192/4B5563/FFFFFF?text=R'"
-                />
-            </div>
-            <!-- Heading with custom gradient, text colors, and a new drop shadow -->
-            <h1 class="text-2xl sm:text-4xl font-extrabold mb-2 drop-shadow-lg">
-                <span class="vdo-gradient">VDO</span>
-                <span class="text-white">ADTR</span>
-            </h1>
-            <h2 class="text-xl sm:text-3xl font-extrabold text-white mb-2">Rakibul Malithya</h2>
-            <p class="text-md sm:text-lg font-medium text-gray-400">Video Editor and Creative Professional</p>
-        </header>
-
-        <!-- Main Content Section -->
-        <main class="space-y-6">
-            <!-- About Me Section -->
-            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">About Me</h2>
-                <p class="text-gray-700 leading-relaxed text-sm">
-                    I am a highly skilled video editor with a passion for storytelling and visual creativity. My expertise spans various areas including crafting compelling short films, creating dynamic motion graphics, and mastering sound design and color grading to bring projects to life. I also possess a deep understanding of camera fundamentals such as exposure, shutter speed, ISO, focal length, and various shot angles, allowing me to approach every project with a comprehensive creative vision.
-                </p>
-            </section>
-
-            <!-- Experience Section based on CV with logos placed before company names -->
-            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Work Experience</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Job 1 -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <div class="flex items-center mb-1">
-                             <!-- Our Voice Logo -->
-                             <img src="https://yt3.googleusercontent.com/1RgXGPe4yokATS-mD0nvWCyPCo3gsRrhBem_K6TE1_B72_J6j3WEe_LLyP10UZkoYxlhy33hGs=s160-c-k-c0x00ffffff-no-rj" alt="Our Voice Logo" class="w-7 h-7 rounded-full mr-3">
-                             <!-- Make company name clickable -->
-                             <a href="https://www.youtube.com/@OurVoice24" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">Our Voice</a>
-                        </div>
-                        <p class="text-gray-600 text-sm">Video Editor</p>
-                        <p class="text-xs text-gray-500 mt-1">April 2025 - Present</p>
-                    </div>
-                    <!-- Job 2 -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <div class="flex items-center mb-1">
-                             <!-- Itahar Al-Amin Mission Logo -->
-                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/242684800_1513395515684258_6706339316110454082_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=9GlRGyBQc_sQ7kNvwG-d_kQ&_nc_oc=AdkBYQuErpYMMXb12n7b9kQ6RHFqLcNaG73o3MN9DSILD9980x-r6y_vxv6fieLjAok&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=KXrw32a1X8zWH8MK9xPodw&oh=00_AfV4UyFyDRYwhFYSbCXF8dO0YmKISdfYnQ8piV_V3epHlA&oe=68BC7699" alt="Itahar Al-Amin Mission Logo" class="w-7 h-7 rounded-full mr-3">
-                             <!-- Make company name clickable -->
-                             <a href="https://www.facebook.com/profile.php?id=100010414724272" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">Itahar Al-amin Mission</a>
-                        </div>
-                        <p class="text-gray-600 text-sm">Computer Teacher</p>
-                        <p class="text-xs text-gray-500 mt-1">March 2025 - May 2025 (3 Months)</p>
-                    </div>
-                    <!-- Job 3 -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <div class="flex items-center mb-1">
-                             <!-- Tara TV Logo -->
-                             <img src="https://yt3.googleusercontent.com/fkbr5YfbVwEI4x3Oq3U9w2xbOahbkMJMpfhwx0TPfEqQtRwsq005IhJ5d3-EaX9JQ6Q-9suu=s160-c-k-c0x00ffffff-no-rj" alt="Tara TV Logo" class="w-7 h-7 rounded-full mr-3">
-                             <!-- Make company name clickable -->
-                             <a href="https://www.youtube.com/@TARANEWSOFFICIAL" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">TARA NEWS</a>
-                        </div>
-                        <p class="text-gray-600 text-sm">Video Editor</p>
-                        <p class="text-xs text-gray-500 mt-1">June 2024 - November 2024 (6 Months)</p>
-                    </div>
-                    <!-- Job 4 -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <div class="flex items-center mb-1">
-                             <!-- TDN Bangla Logo -->
-                             <img src="https://scontent.fccu3-1.fna.fbcdn.net/v/t39.30808-6/339994503_159413133721561_2355646534749856474_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=IahwyGtA2r4Q7kNvwFnStKY&_nc_oc=Adm3PzKFG3Ztp6GmsSqPtgJgOfNUZeM1LU5eCULVqMn0HfhTqjgLdnEi4kVJqd5zUqU&_nc_zt=23&_nc_ht=scontent.fccu3-1.fna&_nc_gid=ToRX4uUQGeB0CK4dQ8KLHw&oh=00_AfW0146cykANdgXGfL5GtMTfTFnKPmu8ev5tC2M8ByrIxQ&oe=68BC5694" alt="TDN Bangla Logo" class="w-7 h-7 rounded-full mr-3">
-                             <!-- Make company name clickable -->
-                             <a href="https://www.facebook.com/tdnbangla" target="_blank" class="text-md font-semibold text-gray-900 hover:text-blue-600 hover:underline">TDN Bangla</a>
-                        </div>
-                        <p class="text-gray-600 text-sm">Video Editor</p>
-                        <p class="text-xs text-gray-500 mt-1">November 2022 - April 2024 (1.5 years)</p>
-                    </div>
+    <!-- 1. Navigation Bar (Fixed Overlay with 30% opacity) -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-white/30 backdrop-blur-sm p-4 md:p-6 transition duration-300">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            
+            <!-- Left Group: JAGARAN (Above) and Home (Highlighted) -->
+            <div class="flex flex-col md:flex-row items-center mb-4 md:mb-0">
+                <!-- JAGARAN Text -->
+                <div class="text-3xl font-extrabold text-indigo-600 tracking-wider mb-2 md:mb-0 md:mr-6">
+                    <a href="https://jagoronculturalsio.github.io/home/">JAGARAN</a>
                 </div>
-            </section>
-
-            <!-- Education Section based on CV -->
-            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Education</h2>
-                <!-- New entry for Master's degree -->
-                <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105 mb-4">
-                    <h3 class="text-md font-semibold text-gray-900">M.A. in Journalism & Mass Communication</h3>
-                    <p class="text-gray-600 text-sm">Harichand Guruchand University</p>
-                    <p class="text-xs text-gray-500 mt-1">Admitted August 29, 2025 - Present</p>
-                    <p class="mt-2 text-gray-700 text-sm">I am pursuing a master's degree in Journalism & Mass Communication to deepen my understanding of media theory, digital storytelling, and media production, building on my undergraduate foundation to advance my career.</p>
-                </div>
-                <!-- Existing entry for Bachelor's degree -->
-                <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                    <h3 class="text-md font-semibold text-gray-900">B.Voc in Broadcast Journalism</h3>
-                    <p class="text-gray-600 text-sm">Derozio Memorial College</p>
-                    <p class="text-xs text-gray-500 mt-1">2022-2025</p>
-                    <p class="mt-2 text-gray-700 text-sm">I completed my graduation with a focus on Broadcast Journalism, achieving an impressive 88% marks in my final semester.</p>
-                </div>
-            </section>
-
-            <!-- Skills Section -->
-            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Skills</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Video Editing Skill Card -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-md font-semibold text-gray-900 mb-2">Video Editing</h3>
-                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
-                            <li>Primer Pro</li>
-                            <li>Davinci Resolve</li>
-                        </ul>
-                    </div>
-                    <!-- Motion Graphics Design Skill Card -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-md font-semibold text-gray-900 mb-2">Motion Graphics Design</h3>
-                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
-                            <li>After Effects</li>
-                            <li>Photoshop</li>
-                        </ul>
-                    </div>
-                    <!-- Sound Design Skill Card -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-md font-semibold text-gray-900 mb-2">Sound Design</h3>
-                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
-                            <li>Primer Pro</li>
-                            <li>Adobe Audition</li>
-                        </ul>
-                    </div>
-                    <!-- Color Grading Skill Card -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-md font-semibold text-gray-900 mb-2">Color Grading</h3>
-                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
-                            <li>Primer Pro</li>
-                            <li>Davinci Resolve</li>
-                        </ul>
-                    </div>
-                    <!-- AI Tools Skill Card -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-md font-semibold text-gray-900 mb-2">AI Tools</h3>
-                        <ul class="list-disc list-inside text-xs text-gray-700 space-y-1">
-                            <li>ChatGPT: Proficient in image generation and information retrieval.</li>
-                            <li>Gemini: Skilled in video creation, information retrieval, and basic coding.</li>
-                        </ul>
-                    </div>
-                    <!-- Camera Operation Skill Card -->
-                    <div class="bg-white p-4 rounded-xl shadow-md transform transition-transform duration-300 hover:scale-105">
-                        <h3 class="text-md font-semibold text-gray-900 mb-2">Camera Operation</h3>
-                        <p class="text-xs text-gray-700 mt-1">Clear understanding of camera fundamentals like Exposure, Shutter speed, ISO, and various shot angles.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Portfolio Link Section - Added as requested -->
-            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm text-center no-print">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">My Work</h2>
-                <p class="text-gray-700 leading-relaxed text-sm mb-6">
-                    Interested in my creative projects? Click the button below to visit my portfolio website and see more of my work.
-                </p>
-                <a href="https://vdoadtr.github.io/Portfolio-VDOADTR/" target="_blank" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold shadow-md hover:bg-blue-700 transition-colors duration-300 glow-button">
-                    Visit Portfolio Website
+                <!-- Home Button (Highlighted/Active) -->
+                <a href="https://jagoronculturalsio.github.io/home/" id="homeButton" 
+                   class="nav-button nav-active px-4 py-2 rounded-lg transition duration-300">
+                    Home
                 </a>
+            </div>
+            
+            <!-- Right Group: Nav Links (About, Contact, Location, Ticket) -->
+            <nav class="flex flex-wrap justify-center space-x-2 md:space-x-4 font-semibold">
+                <a href="https://jagoronculturalsio.github.io/about/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">About</a>
+                <a href="https://jagoronculturalsio.github.io/contact/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Contact</a>
+                <!-- Navigation link updated in previous turn: 'Address' changed to 'Location' -->
+                <a href="https://jagoronculturalsio.github.io/address/" class="nav-button p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition duration-300">Location</a>
+                <!-- Ticket button -->
+                <button id="navTicketButton" 
+                    class="nav-button text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-100 transition duration-300 shadow-sm border border-gray-200"
+                    onclick="handleTicketClick()">
+                    Ticket
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. Banner/Hero Section (Full Width) -->
+    <div id="banner" class="banner-image w-full h-[35vh] md:h-[40vh] mt-[70px] md:mt-[92px]"></div>
+    
+    <!-- 3. Main Content Wrapper (Centered) -->
+    <div id="app-content" class="container mx-auto p-4 md:p-8 pt-0">
+
+        <!-- Main Title Section (BELOW BANNER) -->
+        <section id="home" class="text-center pt-8">
+            <h1 class="text-4xl md:text-6xl font-black text-gray-800 mb-4">
+                <span class="text-indigo-600">JAGARAN</span> Cultural Festival
+            </h1>
+            <p class="text-xl text-gray-500">The Annual Cultural Awakening. Join us for an unforgettable celebration.</p>
+        </section>
+
+        <main class="space-y-16">
+
+            <!-- 1. Main YouTube Video Section -->
+            <section id="main-video-section" class="max-w-4xl mx-auto" aria-label="Program Details Video">
+                <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">A warm welcome to all of you at our festival.</h2>
+                <div id="mainVideoContainer" class="video-container">
+                    <!-- Main Video Iframe -->
+                    <iframe 
+                        id="mainVideoFrame"
+                        src="https://www.youtube.com/embed/mc1xggktlro?autoplay=1&loop=1&playlist=mc1xggktlro&controls=0&playsinline=1"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        title="JAGARAN Program Details Video"
+                        frameborder="0">
+                    </iframe>
+                </div>
             </section>
 
-            <!-- Contact Section with updated info -->
-            <section class="bg-gray-50 p-6 rounded-2xl shadow-sm">
-                <h2 class="text-2xl font-bold text-gray-800 mb-4">Contact</h2>
-                <p class="text-gray-700 leading-relaxed text-sm">
-                    If you are interested in working on a project or would just like to talk, please feel free to contact me.
-                </p>
-                <!-- Flexbox container to make buttons appear in a row on all screen sizes -->
-                <div class="mt-4 text-center flex justify-center items-center gap-4 no-print">
-                    <!-- Email link with correct address -->
-                    <a href="mailto:vdoadtr@gmail.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-blue-700 transition-colors duration-300">
-                        Send Email
-                    </a>
-                    <!-- Phone number with correct link -->
-                    <a href="tel:9531661985" class="inline-block bg-green-600 text-white px-6 py-3 rounded-full font-bold shadow-md hover:bg-green-700 transition-colors duration-300">
-                        Call Me
-                    </a>
-                </div>
-                <!-- Displaying the contact details directly for clarity -->
-                <div class="mt-6 text-center text-gray-600 text-sm">
-                    <p class="font-medium">Email: vdoadtr@gmail.com</p>
-                    <p class="font-medium">Phone: +91 9531661985</p>
+            <!-- 2. Description Section -->
+            <section id="description-section" class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-700 mb-4 text-center">Description</h2>
+                <div class="description-card">
+                    <p class="text-gray-700 text-base mb-4">
+                        Culture and entertainment are an integral part of our lives. To provide a refreshing escape from the busyness of our daily routines, Tamaddun Shilpigosthi is delighted to present a wholesome cultural program for you to enjoy with family, relatives, and friends.
+                    </p>
+                    <p class="text-gray-700 text-base mb-4">
+                        Culture reflects the stories of joy, sorrow, and emotions hidden within our social lives. It can spark a revolution or bring about a change in society's traditional mindset. The practice of value-based culture builds a healthy society. Our mission is to counter vulgarity and cultural degradation by promoting an educational and enlightening culture.
+                    </p>
+                    <p class="text-gray-700 text-base mb-4">
+                        With this goal in mind, a historic cultural event titled the "Jagaran Cultural Festival" is set to take place on December 28th at Gopalpur House, near the airport in the North 24 Parganas district.
+                    </p>
+                    <p class="text-gray-800 text-base text-center mt-6">
+                        We cordially invite you all, along with your friends and family, to this event. Your presence is earnestly awaited.
+                    </p>
                 </div>
             </section>
             
-            <!-- Print Section -->
-            <section class="text-center mt-8 no-print">
-                <button onclick="window.print()" class="bg-gray-700 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-gray-800 transition-colors duration-300">
-                    Print
-                </button>
+            <!-- NEW: Festival Highlights Toggle Section -->
+            <section id="highlights-toggle-section" class="max-w-4xl mx-auto py-8">
+                <div class="text-center">
+                    <button id="toggleHighlightsBtn" 
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-full shadow-xl transition duration-300 flex items-center justify-center mx-auto"
+                        aria-expanded="false" 
+                        aria-controls="highlights-content">
+                        Highlights of Festival
+                        <svg id="toggleIcon" class="w-5 h-5 ml-2 transition-transform duration-300 transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                </div>
+                
+                <!-- Collapsible Content -->
+                <div id="highlights-content" class="highlights-collapse mt-6" style="max-height: 0;">
+                    <div class="description-card p-6 md:p-8 bg-indigo-50 border border-indigo-200">
+                        <h3 class="text-2xl font-extrabold text-indigo-700 mb-4 border-b pb-2">Main Attractions</h3>
+                        <ul class="space-y-3 text-left text-gray-700 list-disc pl-5">
+                            <li><span class="font-semibold text-indigo-600">Cultural Performances:</span> Various types of songs, dances, and poetry recitations.</li>
+                            <li><span class="font-semibold text-indigo-600">Interactive Workshops:</span> Sessions on traditional art and Bengali handicrafts.</li>
+                            <li><span class="font-semibold text-indigo-600">Educational Drama:</span> Educational drama focused on social awareness (on the "Jagaran" theme).</li>
+                            <li><span class="font-semibold text-indigo-600">Art Exhibition:</span> Exhibition of works by local painters and photographers.</li>
+                            <li><span class="font-semibold text-indigo-600">Food Stalls:</span> Arrangement of traditional Bengali cuisine and various delicious snacks.</li>
+                        </ul>
+                        <p class="mt-4 text-center text-sm text-indigo-500 font-medium">— Join us to witness this cultural awakening. —</p>
+                    </div>
+                </div>
             </section>
 
+            <!-- 3. BOOK TICKET Call-to-Action (CTA) Button -->
+            <section class="text-center py-8">
+                <h2 class="text-4xl font-extrabold text-gray-800 mb-6">Ready to Join the Celebration?</h2>
+                <button id="ctaTicketButton" 
+                    class="ticket-button-cta text-white font-bold text-xl px-12 py-4 rounded-full shadow-2xl uppercase tracking-wider"
+                    onclick="handleTicketClick()">
+                    BOOK TICKET NOW
+                </button>
+                <p class="text-sm text-gray-500 mt-4">Limited Seats Available. Secure your spot today!</p>
+            </section>
+
+            <!-- 4. UPDATED: YouTube Playlist Section (Replaced Reels) -->
+            <section id="playlist-section" class="py-10 bg-white rounded-xl shadow-xl max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-700 mb-6 text-center">JAGARAN প্লেলিস্ট</h2>
+                
+                <!-- Playlist Embed Container (using the standard 16:9 class) -->
+                <div class="video-container mx-4 md:mx-auto">
+                    <!-- YouTube Playlist Embed URL: videoseries?list= is the key -->
+                    <iframe 
+                        src="https://www.youtube.com/embed/videoseries?list=h6eeDgBjZq8&autoplay=0&controls=1&modestbranding=1&rel=0" 
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                        title="JAGARAN Cultural Program Playlist">
+                    </iframe>
+                </div>
+                <p class="text-center text-sm text-gray-500 mt-4 mx-4">প্লেলিস্টের ভিডিওগুলি দেখার জন্য ডানদিকে উপরে থাকা প্লেলিস্ট আইকনে ক্লিক করুন।</p>
+            </section>
+            
+            <!-- Placeholder anchors for navigation links -->
+            <div id="about-placeholder"></div>
+            <div id="contact-placeholder"></div>
+            <div id="address-placeholder"></div>
+
         </main>
-
-        <!-- Footer Section -->
-        <footer class="mt-10 text-center text-gray-500 text-xs">
-            <p>&copy; 2025 Rakibul Malithya | All rights reserved.</p>
-        </footer>
-
     </div>
 
+    <!-- Footer/Copyright Section -->
+    <footer class="bg-gray-800 text-white text-center py-4 mt-8 rounded-t-xl shadow-inner">
+        <p class="text-sm text-gray-400">© 2025 JAGARAN Cultural Festival | All rights reserved.</p>
+    </footer>
+
+    <script>
+        // --- Configuration & Initialization ---
+        const TICKET_LINK = "https://jagoronculturalsio.github.io/ticket/"; 
+        
+        // --- NEW Variables for Highlights Toggle ---
+        const toggleHighlightsBtn = document.getElementById('toggleHighlightsBtn');
+        const highlightsContent = document.getElementById('highlights-content');
+        const toggleIcon = document.getElementById('toggleIcon');
+        const mainVideoFrame = document.getElementById('mainVideoFrame');
+
+        // --- Firebase/Auth Setup (Mandatory in this environment) ---
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        // --- Interaction Logic: Ticket Button Handler ---
+        function handleTicketClick() {
+            window.location.href = TICKET_LINK;
+        }
+
+        // --- Interaction Logic: Highlights Toggle ---
+        function toggleHighlights() {
+            const isExpanded = toggleHighlightsBtn.getAttribute('aria-expanded') === 'true';
+
+            if (isExpanded) {
+                // Collapse the content
+                highlightsContent.style.maxHeight = '0';
+                toggleHighlightsBtn.setAttribute('aria-expanded', 'false');
+                toggleIcon.classList.remove('rotated-icon');
+            } else {
+                // Expand the content
+                highlightsContent.style.maxHeight = highlightsContent.scrollHeight + 'px';
+                toggleHighlightsBtn.setAttribute('aria-expanded', 'true');
+                toggleIcon.classList.add('rotated-icon');
+            }
+        }
+        
+        // --- Cleaned up logic: Removed the complex Reels Carousel & Observer code. 
+        // We only keep the initialization logic now.
+
+        // Initialize events on load
+        window.addEventListener('load', () => {
+            // Attach toggle listener
+            if (toggleHighlightsBtn) {
+                toggleHighlightsBtn.addEventListener('click', toggleHighlights);
+            }
+            // Since the complex playback logic is removed, the main video will just 
+            // follow its autoplay/loop settings from the iframe src.
+        });
+
+    </script>
 </body>
 </html>
